@@ -1,0 +1,58 @@
+#This file contains the sources used for different functions.
+#Some links are for future use.
+
+##Motor hat explained##
+https://learn.adafruit.com/adafruit-dc-and-stepper-motor-hat-for-raspberry-pi
+
+
+
+#Keyboard control#
+Raspberry Pi Robotics #3: Keyboard Control:
+http://www.explainingcomputers.com/rasp_pi_robotics.html
+
+Combined with the example scripts from Adafruit:
+~/Adafruit-Motor-HAT-Python-Library/examples/RobotTest.py
+~/Adafruit-Motor-HAT-Python-Library/examples/Robot.py
+
+Scripts are from this source:
+https://learn.adafruit.com/adafruit-dc-and-stepper-motor-hat-for-raspberry-pi/installing-software
+
+#XBOX controller#
+http://www.stuffaboutcode.com/2014/10/raspberry-pi-xbox-360-controller-python.html
+
+
+##0.91" OLED LCD-screen, 128x32px, I2C##
+http://ihmevekotin.fi/product/705_91-oled-lcd-n%C3%A4ytt%C3%B6-128x32-i2c
+https://learn.adafruit.com/monochrome-oled-breakouts/overview
+
+Clone this repository, and use the examples:
+https://github.com/adafruit/Adafruit_SSD1306
+
+Split & input:
+http://www.pythonforbeginners.com/dictionary/python-split
+
+
+
+
+
+#VIDEO STREAMING##
+
+https://www.youtube.com/watch?v=z9gSZwVMybc
+UV4L streaming server 
+https://www.linux-projects.org/uv4l/
+
+Commands:
+***
+rtsp://192.168.1.108:8554/
+
+cvlc -vvv v4l2c:///dev/video0:width=640:height=480:chroma=H264:rotation=90 --sout '#rtp{sdp=rtsp://:8554/}' --demux h264
+v4l2-ctl --list-devices
+uv4l --driver raspicam --auto-video_nr --framerate 25 --extension-presence=0
+
+http://192.168.1.108:8080/stream/video.mjpeg
+
+uv4l uv4l-raspicam uv4l-webrtc
+***
+
+
+
