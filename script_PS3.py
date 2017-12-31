@@ -58,64 +58,12 @@ xboxCont.setupControlCallback(
         xboxCont.XboxControls.RTHUMBY,
         RightThumbYCallBack)
 
-#Use Dpad to turn (the camera)
-#Camera movement not yet implemented
-def DpadCallBack(value):
-	x = 100
-	if (value) == (-1, 0):
-		print "Pan left"
-		robot.RT_forward(x)
-		robot.LT_backward(x)
-		print ""
-	elif (value) == (1, 0):
-		print "Pan right"
-		robot.LT_forward(x)
-		robot.RT_backward(x)
-		print ""
-	elif (value) == (0, 1):
-		print "Camera up!"
-		print ""
-	elif (value) == (0, -1):
-		print "Camera down!"
-		print ""
-	elif (value) == (1, 1):
-		print "Camera up!"
-		print "Pan right!"
-		robot.LT_forward(x)
-		robot.RT_backward(x)
-		print ""
-	elif (value) == (1, -1):
-		print "Camera down!"
-		print "Pan right!"
-		robot.LT_forward(x)
-		robot.RT_backward(x)
-		print ""
-	elif (value) == (-1, 1):
-		print "Camera up!"
-		print "Pan left!"
-		robot.RT_forward(x)
-		robot.LT_backward(x)
-		print ""
-	elif (value) == (-1, -1):
-		print "Camera down!"
-		print "Pan left!"
-		robot.RT_forward(x)
-		robot.LT_backward(x)
-		print ""
-
-	elif (value) == (0, 0):
-			robot.stop()
-
-xboxCont.setupControlCallback(
-        xboxCont.XboxControls.DPAD,
-        DpadCallBack)	
-
 #Press Y to move forward at full speed (255)
 def YButtonCallBack(value):
 	if (value) > 0:
 		robot.forward(255)
 		#print "FULL STEAM AHEAD!"	#Uncomment this line to see visual feedback
-	xboxCont.setupControlCallback(
+xboxCont.setupControlCallback(
 	xboxCont.XboxControls.Y,
 	YButtonCallBack)
 
