@@ -62,41 +62,42 @@ xboxCont.setupControlCallback(
 #Camera movement not yet implemented
 def DpadCallBack(value):
 	x = 100
-	if (value) == (-1, 0):
+
+	if (value) == (-1, 0):		#Dpad left
 		print "Pan left"
 		robot.RT_forward(x)
 		robot.LT_backward(x)
 		print ""
-	elif (value) == (1, 0):
+	elif (value) == (1, 0):		#Dpad right
 		print "Pan right"
 		robot.LT_forward(x)
 		robot.RT_backward(x)
 		print ""
-	elif (value) == (0, 1):
+	elif (value) == (0, 1):		#Dpad up
 		print "Camera up!"
 		print ""
 	elif (value) == (0, -1):
-		print "Camera down!"
+		print "Camera down!"	#Dpad down
 		print ""
-	elif (value) == (1, 1):
+	elif (value) == (1, 1):		#Dpad up right
 		print "Camera up!"
 		print "Pan right!"
 		robot.LT_forward(x)
 		robot.RT_backward(x)
 		print ""
-	elif (value) == (1, -1):
+	elif (value) == (1, -1):	#Dpad down right
 		print "Camera down!"
 		print "Pan right!"
 		robot.LT_forward(x)
 		robot.RT_backward(x)
 		print ""
-	elif (value) == (-1, 1):
+	elif (value) == (-1, 1):	#Dpad up left
 		print "Camera up!"
 		print "Pan left!"
 		robot.RT_forward(x)
 		robot.LT_backward(x)
 		print ""
-	elif (value) == (-1, -1):
+	elif (value) == (-1, -1):	#Dpad down left
 		print "Camera down!"
 		print "Pan left!"
 		robot.RT_forward(x)
