@@ -64,48 +64,48 @@ def DpadCallBack(value):
 	x = 100
 
 	if (value) == (-1, 0):		#Dpad left
-		print "Pan left"
+		#print "Pan left"
 		robot.RT_forward(x)
 		robot.LT_backward(x)
-		print ""
+		#print ""
 	elif (value) == (1, 0):		#Dpad right
-		print "Pan right"
+		#print "Pan right"
 		robot.LT_forward(x)
 		robot.RT_backward(x)
 		print ""
 	elif (value) == (0, 1):		#Dpad up
-		print "Camera up!"
-		print ""
+		#print "Camera up!"
+		#print ""
 	elif (value) == (0, -1):
-		print "Camera down!"	#Dpad down
-		print ""
+		#print "Camera down!"	#Dpad down
+		#print ""
 	elif (value) == (1, 1):		#Dpad up right
-		print "Camera up!"
-		print "Pan right!"
+		#print "Camera up!"
+		#print "Pan right!"
 		robot.LT_forward(x)
 		robot.RT_backward(x)
-		print ""
+		#print ""
 	elif (value) == (1, -1):	#Dpad down right
-		print "Camera down!"
-		print "Pan right!"
+		#print "Camera down!"
+		#print "Pan right!"
 		robot.LT_forward(x)
 		robot.RT_backward(x)
-		print ""
+		#print ""
 	elif (value) == (-1, 1):	#Dpad up left
-		print "Camera up!"
-		print "Pan left!"
+		#print "Camera up!"
+		#print "Pan left!"
 		robot.RT_forward(x)
 		robot.LT_backward(x)
-		print ""
+		#print ""
 	elif (value) == (-1, -1):	#Dpad down left
-		print "Camera down!"
-		print "Pan left!"
+		#print "Camera down!"
+		#print "Pan left!"
 		robot.RT_forward(x)
 		robot.LT_backward(x)
-		print ""
+		#print ""
 
 	elif (value) == (0, 0):
-			robot.stop()
+		robot.stop()
 
 xboxCont.setupControlCallback(
         xboxCont.XboxControls.DPAD,
@@ -154,7 +154,7 @@ try:
 	print "* CTRL + C to quit                                   *"
 	print "******************************************************"
 	print '\033[0m' + " "						#Default color
-	print "Xbox controller detected, ready for input!"
+	print "Ready for input!"
 
 	while True:
 		time.sleep(1)
