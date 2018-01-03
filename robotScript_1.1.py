@@ -24,6 +24,7 @@ xboxCont = XboxController.XboxController(
 LEFT_TRIM = 0
 RIGHT_TRIM = 0
 
+speed = 255 	#This determines the speed multiplier of the DC motors. Use values 0-255
 robot = Robot.Robot(left_trim=LEFT_TRIM, right_trim=RIGHT_TRIM)
 
 #Next we define the controls:
@@ -35,10 +36,10 @@ robot = Robot.Robot(left_trim=LEFT_TRIM, right_trim=RIGHT_TRIM)
 #Left Stick
 def LeftThumbYCallBack(value):
 	if (value) >= 0:
-		robot.LT_forward(int(value*(1)*200))  #200 determines the speed of the motor (0-255)
+		robot.LT_forward(int(value*(1)*speed))  #200 determines the speed of the motor (0-255)
 		#print "Left track forward: ", int(value*(1)*100),"%"	#Uncomment this line to see visual feedback
 	elif (value) < 0:
-		robot.LT_backward(int(value*(-1)*200))
+		robot.LT_backward(int(value*(-1)*speed))
 		#print "Left track backward: ", int(value*(-1)*100),"%"	#Uncomment this line to see visual feedback
 
 xboxCont.setupControlCallback(
@@ -48,10 +49,10 @@ xboxCont.setupControlCallback(
 #Right Stick
 def RightThumbYCallBack(value):
         if (value) >= 0:
-                robot.RT_forward(int(value*(1)*200))
+                robot.RT_forward(int(value*(1)*speed))
                 #print "Right track forward: ", int(value*(1)*100),"%"	#Uncomment this line to see visual feedback
         elif (value) < 0:
-                robot.RT_backward(int(value*(-1)*200))
+                robot.RT_backward(int(value*(-1)*speed))
                 #print "Right track backward: ", int(value*(-1)*100),"%"	#Uncomment this line to see visual feedback
 
 xboxCont.setupControlCallback(
@@ -61,7 +62,7 @@ xboxCont.setupControlCallback(
 #Use Dpad to turn (the camera)
 #Camera movement not yet implemented
 def DpadCallBack(value):
-	x = 100
+	x = 100		#X-axis turning speed multiplier, use values 0-255
 
 	if (value) == (-1, 0):		#Dpad left
 		#print "Pan left"
