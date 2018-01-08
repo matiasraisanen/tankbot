@@ -1,65 +1,61 @@
-import pygame, sys
-from time import sleep
+#!/usr/bin/env python3
+__author__ = 'Anton Vanhoucke'
 
-# setup the pygame window
-pygame.init()
-window = pygame.display.set_mode((200, 200), 0, 32)
+import evdev
+import ev3dev.auto as ev3
+import threading
 
-# how many joysticks connected to computer?
-joystick_count = pygame.joystick.get_count()
-print "There is " + str(joystick_count) + " joystick/s"
+## Some helpers ##
+def scale(val, src, dst):
+    """
+    Scale the given value from the scale of src to the scale of dst.
 
-if joystick_count == 0:
-    # if no joysticks, quit program safely
-    print ("Error, I did not find any joysticks")
-    pygame.quit()
-    sys.exit()
-else:
-    # initialise joystick
-    joystick = pygame.joystick.Joystick(0)
-    joystick.init()
+    val: float or int
+    src: tuple
+    dst: tuple
 
-axes = joystick.get_numaxes()
-buttons = joystick.get_numbuttons()
-hats = joystick.get_numhats()
+    example: print(scale(99, (0.0, 99.0), (-1.0, +1.0)))
+    """
+    return (float(val - src[0]) / (src[1] - src[0])) * (dst[1] - dst[0]) + dst[0]
 
-print "There is " + str(axes) + " axes"
-print "There is " + str(buttons) + " button/s"
-print "There is " + str(hats) + " hat/s"
+def scale_stick(value):
+    return scale(value,(0,255),(-100,100))
 
-def getAxis(number):
-    # when nothing is moved on an axis, the VALUE IS NOT EXACTLY ZERO
-    # so this is used not "if joystick value not zero"
-    if joystick.get_axis(number) < -0.1 or joystick.get_axis(number) > 0.1:
-      # value between 1.0 and -1.0
-      print "Axis value is %s" %(joystick.get_axis(number))
-      print "Axis ID is %s" %(number)
- 
-def getButton(number):
-    # returns 1 or 0 - pressed or not
-    if joystick.get_button(number):
-      # just prints id of button
-      print "Button ID is %s" %(number)
+## Initializing ##
+print("Finding ps3 controller...")
+devices = [evdev.InputDevice(fn) for fn in evdev.list_devices()]
+for device in devices:
+    if device.name == 'PLAYSTATION(R)3 Controller':
+        ps3dev = device.fn
 
-def getHat(number):
-    if joystick.get_hat(number) != (0,0):
-      # returns tuple with values either 1, 0 or -1
-      print "Hat value is %s, %s" %(joystick.get_hat(number)[0],joystick.get_hat(number)[1])
-      print "Hat ID is %s" %(number)
+gamepad = evdev.InputDevice(ps3dev)
 
-while True:
-    for event in pygame.event.get():
-      # loop through events, if window shut down, quit program
-      if event.type == pygame.QUIT:
-        pygame.quit()
-        sys.exit()
-    if axes != 0:
-      for i in range(axes):
-        getAxis(i)
-    if buttons != 0:
-      for i in range(buttons):
-        getButton(i)
-    if hats != 0:
-      for i in range(hats):
-        getHat(i)
-    sleep(0.5)
+speed = 0
+running = True
+
+class MotorThread(threading.Thread):
+    def __init__(self):
+        self.motor = ev3.LargeMotor(ev3.OUTPUT_A)
+        threading.Thread.__init__(self)
+
+    def run(self):
+        print("Engine running!")
+        while running:
+            self.motor.run_direct(duty_cycle_sp=speed)
+
+        self.motor.stop()
+
+motor_thread = MotorThread()
+motor_thread.setDaemon(True)
+motor_thread.start()
+
+
+for event in gamepad.read_loop():   #this loops infinitely
+    if event.type == 3:             #A stick is moved
+        if event.code == 5:         #Y axis on right stick
+            speed = scale_stick(event.value)
+
+    if event.type == 1 and event.code == 302 and event.value == 1:
+        print("X button is pressed. Stopping.")
+        running = False
+        break

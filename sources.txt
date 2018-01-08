@@ -20,6 +20,8 @@ https://learn.adafruit.com/adafruit-dc-and-stepper-motor-hat-for-raspberry-pi/in
 #XBOX controller#
 http://www.stuffaboutcode.com/2014/10/raspberry-pi-xbox-360-controller-python.html
 
+#PS3 Controller
+http://wiki.ros.org/ps3joy
 
 ##0.91" OLED LCD-screen, 128x32px, I2C##
 http://ihmevekotin.fi/product/705_91-oled-lcd-n%C3%A4ytt%C3%B6-128x32-i2c
@@ -40,6 +42,12 @@ http://www.pythonforbeginners.com/dictionary/python-split
 https://www.youtube.com/watch?v=z9gSZwVMybc
 UV4L streaming server 
 https://www.linux-projects.org/uv4l/
+https://www.youtube.com/watch?v=7WA_tBTJQrk
+http://www.instructables.com/id/Raspberry-Pi-Video-Streaming/	#Stream works with this
+
+#Example commands to start a stream at http://192.168.1.108:9090/stream
+sudo pkill uv4l
+sudo uv4l -nopreview --auto-video_nr --driver raspicam --encoding mjpeg --rotation 90 --width 640 --height 480 --framerate 20 --server-option '--port=9090' --server-option '--max-queued-connections=30' --server-option '--max-streams=5' --server-option '--max-threads=29'
 
 Commands:
 ***

@@ -17,7 +17,8 @@ import XboxController
 xboxCont = XboxController.XboxController(
 	controllerCallBack = None,
 	joystickNo = 0,
-	deadzone = 0.14,	#Deadzone of 0.14 eliminates the accidental tiny nudges on the controller
+	deadzone = 0.05,
+	#deadzone = 0.14,	#Deadzone of 0.14 eliminates the accidental tiny nudges on the controller
 	scale = 1,
 	invertYAxis = True)	#Y-axis must be inverted in order for the thumbsticks to work intuitively (forward=positive, back=negative)
 
@@ -73,13 +74,13 @@ def DpadCallBack(value):
 		#print "Pan right"
 		robot.LT_forward(x)
 		robot.RT_backward(x)
-		print ""
+		#print ""
 	elif (value) == (0, 1):		#Dpad up
 		#print "Camera up!"
-		#print ""
+		print ""
 	elif (value) == (0, -1):
 		#print "Camera down!"	#Dpad down
-		#print ""
+		print ""
 	elif (value) == (1, 1):		#Dpad up right
 		#print "Camera up!"
 		#print "Pan right!"
