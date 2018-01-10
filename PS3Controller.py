@@ -49,10 +49,10 @@ event.value
 
 """
 #Main class for reading the xbox controller values
-class XboxController(threading.Thread):
+class PS3Controller(threading.Thread):
 
     #internal ids for the xbox controls
-    class XboxControls():
+    class PS3Controls():
         LTHUMBX = 0
         LTHUMBY = 1
         RTHUMBX = 2
@@ -105,31 +105,31 @@ class XboxController(threading.Thread):
 
 
     #map between pygame axis (analogue stick) ids and xbox control ids
-    AXISCONTROLMAP = {PyGameAxis.LTHUMBX: XboxControls.LTHUMBX,
-                      PyGameAxis.LTHUMBY: XboxControls.LTHUMBY,
-                      PyGameAxis.RTHUMBX: XboxControls.RTHUMBX,
-                      PyGameAxis.RTHUMBY: XboxControls.RTHUMBY}
+    AXISCONTROLMAP = {PyGameAxis.LTHUMBX: PS3Controls.LTHUMBX,
+                      PyGameAxis.LTHUMBY: PS3Controls.LTHUMBY,
+                      PyGameAxis.RTHUMBX: PS3Controls.RTHUMBX,
+                      PyGameAxis.RTHUMBY: PS3Controls.RTHUMBY}
     
     #map between pygame axis (trigger) ids and xbox control ids
-    TRIGGERCONTROLMAP = {PyGameAxis.RTRIGGER: XboxControls.RTRIGGER,
-                         PyGameAxis.LTRIGGER: XboxControls.LTRIGGER}
+    TRIGGERCONTROLMAP = {PyGameAxis.RTRIGGER: PS3Controls.RTRIGGER,
+                         PyGameAxis.LTRIGGER: PS3Controls.LTRIGGER}
 
     #map between pygame buttons ids and xbox contorl ids
-    BUTTONCONTROLMAP = {PyGameButtons.A: XboxControls.CROSS,
-                        PyGameButtons.B: XboxControls.SPHERE,
-                        PyGameButtons.X: XboxControls.SQUARE,
-                        PyGameButtons.Y: XboxControls.TRIANGLE,
-                        PyGameButtons.LB: XboxControls.LB,
-                        PyGameButtons.RB: XboxControls.RB,
-                        PyGameButtons.BACK: XboxControls.BACK,
-                        PyGameButtons.START: XboxControls.START,
-                        PyGameButtons.XBOX: XboxControls.XBOX,
-                        PyGameButtons.LEFTTHUMB: XboxControls.LEFTTHUMB,
-                        PyGameButtons.RIGHTTHUMB: XboxControls.RIGHTTHUMB,
-                        PyGameButtons.DPADUP: XboxControls.DPADUP,
-                        PyGameButtons.DPADDOWN: XboxControls.DPADDOWN,
-                        PyGameButtons.DPADLEFT: XboxControls.DPADLEFT,
-                        PyGameButtons.DPADRIGHT: XboxControls.DPADRIGHT}
+    BUTTONCONTROLMAP = {PyGameButtons.A: PS3Controls.CROSS,
+                        PyGameButtons.B: PS3Controls.SPHERE,
+                        PyGameButtons.X: PS3Controls.SQUARE,
+                        PyGameButtons.Y: PS3Controls.TRIANGLE,
+                        PyGameButtons.LB: PS3Controls.LB,
+                        PyGameButtons.RB: PS3Controls.RB,
+                        PyGameButtons.BACK: PS3Controls.BACK,
+                        PyGameButtons.START: PS3Controls.START,
+                        PyGameButtons.XBOX: PS3Controls.XBOX,
+                        PyGameButtons.LEFTTHUMB: PS3Controls.LEFTTHUMB,
+                        PyGameButtons.RIGHTTHUMB: PS3Controls.RIGHTTHUMB,
+                        PyGameButtons.DPADUP: PS3Controls.DPADUP,
+                        PyGameButtons.DPADDOWN: PS3Controls.DPADDOWN,
+                        PyGameButtons.DPADLEFT: PS3Controls.DPADLEFT,
+                        PyGameButtons.DPADRIGHT: PS3Controls.DPADRIGHT}
                         
     #setup xbox controller class
     def __init__(self,
@@ -153,27 +153,27 @@ class XboxController(threading.Thread):
         self.controlCallbacks = {}
 
         #setup controller properties
-        self.controlValues = {self.XboxControls.LTHUMBX:0,
-                              self.XboxControls.LTHUMBY:0,
-                              self.XboxControls.RTHUMBX:0,
-                              self.XboxControls.RTHUMBY:0,
-                              self.XboxControls.RTRIGGER:0,
-                              self.XboxControls.LTRIGGER:0,
-                              self.XboxControls.CROSS:0,
-                              self.XboxControls.SPHERE:0,
-                              self.XboxControls.SQUARE:0,
-                              self.XboxControls.TRIANGLE:0,
-                              self.XboxControls.LB:0,
-                              self.XboxControls.RB:0,
-                              self.XboxControls.BACK:0,
-                              self.XboxControls.START:0,
-                              self.XboxControls.XBOX:0,
-                              self.XboxControls.LEFTTHUMB:0,
-                              self.XboxControls.RIGHTTHUMB:0,
-                              self.XboxControls.DPADUP:(0),
-                              self.XboxControls.DPADDOWN:(0),
-                              self.XboxControls.DPADLEFT:(0),
-                              self.XboxControls.DPADRIGHT:(0),
+        self.controlValues = {self.PS3Controls.LTHUMBX:0,
+                              self.PS3Controls.LTHUMBY:0,
+                              self.PS3Controls.RTHUMBX:0,
+                              self.PS3Controls.RTHUMBY:0,
+                              self.PS3Controls.RTRIGGER:0,
+                              self.PS3Controls.LTRIGGER:0,
+                              self.PS3Controls.CROSS:0,
+                              self.PS3Controls.SPHERE:0,
+                              self.PS3Controls.SQUARE:0,
+                              self.PS3Controls.TRIANGLE:0,
+                              self.PS3Controls.LB:0,
+                              self.PS3Controls.RB:0,
+                              self.PS3Controls.BACK:0,
+                              self.PS3Controls.START:0,
+                              self.PS3Controls.XBOX:0,
+                              self.PS3Controls.LEFTTHUMB:0,
+                              self.PS3Controls.RIGHTTHUMB:0,
+                              self.PS3Controls.DPADUP:(0),
+                              self.PS3Controls.DPADDOWN:(0),
+                              self.PS3Controls.DPADLEFT:(0),
+                              self.PS3Controls.DPADRIGHT:(0),
                               }
 
         #setup pygame
@@ -182,91 +182,91 @@ class XboxController(threading.Thread):
     #Create controller properties
     @property
     def LTHUMBX(self):
-        return self.controlValues[self.XboxControls.LTHUMBX]
+        return self.controlValues[self.PS3Controls.LTHUMBX]
 
     @property
     def LTHUMBY(self):
-        return self.controlValues[self.XboxControls.LTHUMBY]
+        return self.controlValues[self.PS3Controls.LTHUMBY]
 
     @property
     def RTHUMBX(self):
-        return self.controlValues[self.XboxControls.RTHUMBX]
+        return self.controlValues[self.PS3Controls.RTHUMBX]
 
     @property
     def RTHUMBY(self):
-        return self.controlValues[self.XboxControls.RTHUMBY]
+        return self.controlValues[self.PS3Controls.RTHUMBY]
 
     @property
     def RTRIGGER(self):
-        return self.controlValues[self.XboxControls.RTRIGGER]
+        return self.controlValues[self.PS3Controls.RTRIGGER]
 
     @property
     def LTRIGGER(self):
-        return self.controlValues[self.XboxControls.LTRIGGER]
+        return self.controlValues[self.PS3Controls.LTRIGGER]
 
     @property
     def A(self):
-        return self.controlValues[self.XboxControls.A]
+        return self.controlValues[self.PS3Controls.A]
 
     @property
     def CROSS(self):
-        return self.controlValues[self.XboxControls.CROSS]
+        return self.controlValues[self.PS3Controls.CROSS]
 
     @property
     def SPHERE(self):
-        return self.controlValues[self.XboxControls.SPHERE]
+        return self.controlValues[self.PS3Controls.SPHERE]
 
     @property
     def SQUARE(self):
-        return self.controlValues[self.XboxControls.SQUARE]
+        return self.controlValues[self.PS3Controls.SQUARE]
 
     @property
     def TRIANGLE(self):
-        return self.controlValues[self.XboxControls.TRIANGLE]
+        return self.controlValues[self.PS3Controls.TRIANGLE]
 
     @property
     def LB(self):
-        return self.controlValues[self.XboxControls.LB]
+        return self.controlValues[self.PS3Controls.LB]
 
     @property
     def RB(self):
-        return self.controlValues[self.XboxControls.RB]
+        return self.controlValues[self.PS3Controls.RB]
 
     @property
     def BACK(self):
-        return self.controlValues[self.XboxControls.BACK]
+        return self.controlValues[self.PS3Controls.BACK]
 
     @property
     def START(self):
-        return self.controlValues[self.XboxControls.START]
+        return self.controlValues[self.PS3Controls.START]
 
     @property
     def XBOX(self):
-        return self.controlValues[self.XboxControls.XBOX]
+        return self.controlValues[self.PS3Controls.XBOX]
 
     @property
     def LEFTTHUMB(self):
-        return self.controlValues[self.XboxControls.LEFTTHUMB]
+        return self.controlValues[self.PS3Controls.LEFTTHUMB]
 
     @property
     def RIGHTTHUMB(self):
-        return self.controlValues[self.XboxControls.RIGHTTHUMB]
+        return self.controlValues[self.PS3Controls.RIGHTTHUMB]
 
     @property
     def DPADUP(self):
-        return self.controlValues[self.XboxControls.DPADUP]
+        return self.controlValues[self.PS3Controls.DPADUP]
 
     @property
     def DPADDOWN(self):
-        return self.controlValues[self.XboxControls.DPADDOWN]    
+        return self.controlValues[self.PS3Controls.DPADDOWN]    
 
     @property
     def DPADLEFT(self):
-        return self.controlValues[self.XboxControls.DPADLEFT]
+        return self.controlValues[self.PS3Controls.DPADLEFT]
 
     @property
     def DPADRIGHT(self):
-        return self.controlValues[self.XboxControls.DPADRIGHT]
+        return self.controlValues[self.PS3Controls.DPADRIGHT]
 
     #setup pygame
     def _setupPygame(self, joystickNo):
@@ -318,7 +318,7 @@ class XboxController(threading.Thread):
                 elif event.type == JOYHATMOTION:
                     #update control value
                     print event.type
-                    self.updateControlValue(self.XboxControls.DPAD, event.value)
+                    self.updateControlValue(self.PS3Controls.DPAD, event.value)
 
                 #button pressed and unpressed
                 elif event.type == JOYBUTTONUP or event.type == JOYBUTTONDOWN:
@@ -392,15 +392,15 @@ if __name__ == '__main__':
     #    print "LY {}".format(yValue)
 
     #setup xbox controller, set out the deadzone and scale, also invert the Y Axis (for some reason in Pygame negative is up - wierd! 
-    xboxCont = XboxController(controlCallBack, deadzone = 30, scale = 100, invertYAxis = True)
+    PS3Cont = PS3Controller(controlCallBack, deadzone = 30, scale = 100, invertYAxis = True)
 
     #setup the left thumb (X & Y) callbacks
-    #xboxCont.setupControlCallback(xboxCont.XboxControls.LTHUMBX, leftThumbX)
-    #xboxCont.setupControlCallback(xboxCont.XboxControls.LTHUMBY, leftThumbY)
+    #PS3Cont.setupControlCallback(PS3Cont.PS3Controls.LTHUMBX, leftThumbX)
+    #PS3Cont.setupControlCallback(PS3Cont.PS3Controls.LTHUMBY, leftThumbY)
 
     try:
         #start the controller
-        xboxCont.start()
+        PS3Cont.start()
         print "PS3 controller running"
         while True:
             time.sleep(1)
@@ -416,4 +416,4 @@ if __name__ == '__main__':
         
     finally:
         #stop the controller
-        xboxCont.stop()
+        PS3Cont.stop()

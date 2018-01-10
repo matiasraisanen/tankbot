@@ -14,7 +14,7 @@ import time
 import Robot
 import PS3Controller
 
-xboxCont = PS3Controller.XboxController(
+PS3Cont = PS3Controller.PS3Controller(
 	controllerCallBack = None,
 	joystickNo = 0,
 	deadzone = 0.05,
@@ -43,8 +43,8 @@ def LeftThumbYCallBack(value):
 		robot.LT_backward(int(value*(-1)*speed))
 		#print "Left track backward: ", int(value*(-1)*100),"%"	#Uncomment this line to see visual feedback
 
-xboxCont.setupControlCallback(
-        xboxCont.XboxControls.LTHUMBY,
+PS3Cont.setupControlCallback(
+        PS3Cont.PS3Controls.LTHUMBY,
         LeftThumbYCallBack)
 
 #Right Stick
@@ -56,8 +56,8 @@ def RightThumbYCallBack(value):
                 robot.RT_backward(int(value*(-1)*speed))
                 #print "Right track backward: ", int(value*(-1)*100),"%"	#Uncomment this line to see visual feedback
 
-xboxCont.setupControlCallback(
-        xboxCont.XboxControls.RTHUMBY,
+PS3Cont.setupControlCallback(
+        PS3Cont.PS3Controls.RTHUMBY,
         RightThumbYCallBack)
 
 
@@ -68,8 +68,8 @@ def DpadUpCallBack(value):
         elif (value) == 0:
             print "Camera up STOP"	#Uncomment this line to see visual feedback
 
-xboxCont.setupControlCallback(
-        xboxCont.XboxControls.DPADUP,
+PS3Cont.setupControlCallback(
+        PS3Cont.PS3Controls.DPADUP,
         DpadUpCallBack
         )
 
@@ -79,8 +79,8 @@ def DpadDownCallBack(value):
         elif (value) == 0:
             print "Camera down STOP"	#Uncomment this line to see visual feedback
 
-xboxCont.setupControlCallback(
-        xboxCont.XboxControls.DPADDOWN,
+PS3Cont.setupControlCallback(
+        PS3Cont.PS3Controls.DPADDOWN,
         DpadDownCallBack
         )
 
@@ -90,8 +90,8 @@ def DpadLeftCallBack(value):
         elif (value) == 0:
             print "Camera left STOP"	#Uncomment this line to see visual feedback
 
-xboxCont.setupControlCallback(
-        xboxCont.XboxControls.DPADLEFT,
+PS3Cont.setupControlCallback(
+        PS3Cont.PS3Controls.DPADLEFT,
         DpadLeftCallBack
         )
 
@@ -101,8 +101,8 @@ def DpadRightCallBack(value):
         elif (value) == 0:
             print "Camera right STOP"	#Uncomment this line to see visual feedback
 
-xboxCont.setupControlCallback(
-        xboxCont.XboxControls.DPADRIGHT,
+PS3Cont.setupControlCallback(
+        PS3Cont.PS3Controls.DPADRIGHT,
         DpadRightCallBack
         )
 
@@ -111,8 +111,8 @@ def YButtonCallBack(value):
 	if (value) > 0:
 		robot.forward(255)
 		print "FULL STEAM AHEAD!"	#Uncomment this line to see visual feedback
-	xboxCont.setupControlCallback(
-	xboxCont.XboxControls.Y,
+	PS3Cont.setupControlCallback(
+	PS3Cont.PS3Controls.Y,
 	YButtonCallBack)
 
 #Press CIRCLE to stop motors
@@ -120,39 +120,39 @@ def StopButtonCallBack(value):
 	if (value) > 0:
 		robot.stop()
 		print "Stop"	#Uncomment this line to see visual feedback
-xboxCont.setupControlCallback(
-	xboxCont.XboxControls.SPHERE,
+PS3Cont.setupControlCallback(
+	PS3Cont.PS3Controls.SPHERE,
 	StopButtonCallBack)
 
 #Press CROSS
 def CrossButtonCallBack(value):
 	if (value) == 1:
 		print "Cross button pressed"	#Uncomment this line to see visual feedback
-xboxCont.setupControlCallback(
-	xboxCont.XboxControls.CROSS,
+PS3Cont.setupControlCallback(
+	PS3Cont.PS3Controls.CROSS,
 	CrossButtonCallBack)
 
 #Press SQUARE
 def SquareButtonCallBack(value):
 	if (value) == 1:
 		print "SQUARE button pressed"	#Uncomment this line to see visual feedback
-xboxCont.setupControlCallback(
-	xboxCont.XboxControls.SQUARE,
+PS3Cont.setupControlCallback(
+	PS3Cont.PS3Controls.SQUARE,
 	SquareButtonCallBack)
 
 #Press TRIANGLE
 def TriangleButtonCallBack(value):
 	if (value) == 1:
 		print "TRIANGLE button pressed"	#Uncomment this line to see visual feedback
-xboxCont.setupControlCallback(
-	xboxCont.XboxControls.TRIANGLE,
+PS3Cont.setupControlCallback(
+	PS3Cont.PS3Controls.TRIANGLE,
 	TriangleButtonCallBack)
 
 #Next part runs the actual program:
 
 try:
     #start the controller
-	xboxCont.start()
+	PS3Cont.start()
 	#Cool visuals :-)
 	print '\033[92m' + " "						#Green color
 	print "*****************TANK CONTROL V 1.2*PS3***************"
@@ -178,7 +178,7 @@ except:
 
 finally:
 	#stop the controller
-	xboxCont.stop()
+	PS3Cont.stop()
 
 #Sources:
 #http://www.stuffaboutcode.com/2014/10/raspberry-pi-xbox-360-controller-python.html
