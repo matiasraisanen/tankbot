@@ -59,10 +59,10 @@ class XboxController(threading.Thread):
         RTHUMBY = 3
         RTRIGGER = 9
         LTRIGGER = 8
-        A = 14  #x
-        B = 13  #ball
-        X = 15  #square
-        Y = 12  #triangle
+        CROSS = 14
+        SPHERE = 13  #ball
+        SQUARE = 15  #square
+        TRIANGLE = 12  #triangle
         LB = 10
         RB = 11
         BACK = 0
@@ -80,22 +80,29 @@ class XboxController(threading.Thread):
         LTHUMBY = 1
         RTHUMBX = 2
         RTHUMBY = 3
-        RTRIGGER = 4
-        LTRIGGER = 5
+        RTRIGGER = 13
+        LTRIGGER = 12
 
     #pygame constants for the buttons of the xbox controller
     class PyGameButtons():
-	A = 0
-        B = 1
-        X = 2
-        Y = 3
-        LB = 4
-        RB = 5
-        BACK = 6
-        START = 7
-        XBOX = 8
-        LEFTTHUMB = 9
-        RIGHTTHUMB = 10
+	A = 14
+        B = 13
+        X = 15
+        Y = 12
+        LB = 10
+        RB = 11
+        BACK = 0
+        START = 3
+        XBOX = 16
+        LEFTTHUMB = 1
+        RIGHTTHUMB = 2
+        RTRIGGER = 9
+        LTRIGGER = 8
+        DPADUP = 4
+        DPADDOWN = 6
+        DPADLEFT = 7
+        DPADRIGHT = 5
+
 
     #map between pygame axis (analogue stick) ids and xbox control ids
     AXISCONTROLMAP = {PyGameAxis.LTHUMBX: XboxControls.LTHUMBX,
@@ -108,17 +115,21 @@ class XboxController(threading.Thread):
                          PyGameAxis.LTRIGGER: XboxControls.LTRIGGER}
 
     #map between pygame buttons ids and xbox contorl ids
-    BUTTONCONTROLMAP = {PyGameButtons.A: XboxControls.A,
-                        PyGameButtons.B: XboxControls.B,
-                        PyGameButtons.X: XboxControls.X,
-                        PyGameButtons.Y: XboxControls.Y,
+    BUTTONCONTROLMAP = {PyGameButtons.A: XboxControls.CROSS,
+                        PyGameButtons.B: XboxControls.SPHERE,
+                        PyGameButtons.X: XboxControls.SQUARE,
+                        PyGameButtons.Y: XboxControls.TRIANGLE,
                         PyGameButtons.LB: XboxControls.LB,
                         PyGameButtons.RB: XboxControls.RB,
                         PyGameButtons.BACK: XboxControls.BACK,
                         PyGameButtons.START: XboxControls.START,
                         PyGameButtons.XBOX: XboxControls.XBOX,
                         PyGameButtons.LEFTTHUMB: XboxControls.LEFTTHUMB,
-                        PyGameButtons.RIGHTTHUMB: XboxControls.RIGHTTHUMB}
+                        PyGameButtons.RIGHTTHUMB: XboxControls.RIGHTTHUMB,
+                        PyGameButtons.DPADUP: XboxControls.DPADUP,
+                        PyGameButtons.DPADDOWN: XboxControls.DPADDOWN,
+                        PyGameButtons.DPADLEFT: XboxControls.DPADLEFT,
+                        PyGameButtons.DPADRIGHT: XboxControls.DPADRIGHT}
                         
     #setup xbox controller class
     def __init__(self,
@@ -148,10 +159,10 @@ class XboxController(threading.Thread):
                               self.XboxControls.RTHUMBY:0,
                               self.XboxControls.RTRIGGER:0,
                               self.XboxControls.LTRIGGER:0,
-                              self.XboxControls.A:0,
-                              self.XboxControls.B:0,
-                              self.XboxControls.X:0,
-                              self.XboxControls.Y:0,
+                              self.XboxControls.CROSS:0,
+                              self.XboxControls.SPHERE:0,
+                              self.XboxControls.SQUARE:0,
+                              self.XboxControls.TRIANGLE:0,
                               self.XboxControls.LB:0,
                               self.XboxControls.RB:0,
                               self.XboxControls.BACK:0,
@@ -198,16 +209,20 @@ class XboxController(threading.Thread):
         return self.controlValues[self.XboxControls.A]
 
     @property
-    def B(self):
-        return self.controlValues[self.XboxControls.B]
+    def CROSS(self):
+        return self.controlValues[self.XboxControls.CROSS]
 
     @property
-    def X(self):
-        return self.controlValues[self.XboxControls.X]
+    def SPHERE(self):
+        return self.controlValues[self.XboxControls.SPHERE]
 
     @property
-    def Y(self):
-        return self.controlValues[self.XboxControls.Y]
+    def SQUARE(self):
+        return self.controlValues[self.XboxControls.SQUARE]
+
+    @property
+    def TRIANGLE(self):
+        return self.controlValues[self.XboxControls.TRIANGLE]
 
     @property
     def LB(self):
@@ -264,7 +279,7 @@ class XboxController(threading.Thread):
         # init the joystick control
         pygame.joystick.init()
         # how many joysticks are there
-        #print pygame.joystick.get_count()
+        print pygame.joystick.get_count()
         # get the first joystick
         joy = pygame.joystick.Joystick(joystickNo)
         # init that joystick
@@ -302,6 +317,7 @@ class XboxController(threading.Thread):
                 #d pad
                 elif event.type == JOYHATMOTION:
                     #update control value
+                    print event.type
                     self.updateControlValue(self.XboxControls.DPAD, event.value)
 
                 #button pressed and unpressed
@@ -368,23 +384,24 @@ if __name__ == '__main__':
     def controlCallBack(xboxControlId, value):
         print "Control Id = {}, Value = {}".format(xboxControlId, value)
 
+
     #specific callbacks for the left thumb (X & Y)
-    def leftThumbX(xValue):
-        print "LX {}".format(xValue)
-    def leftThumbY(yValue):
-        print "LY {}".format(yValue)
+    #def leftThumbX(xValue):
+    #    print "LX {}".format(xValue)
+    #def leftThumbY(yValue):
+    #    print "LY {}".format(yValue)
 
     #setup xbox controller, set out the deadzone and scale, also invert the Y Axis (for some reason in Pygame negative is up - wierd! 
     xboxCont = XboxController(controlCallBack, deadzone = 30, scale = 100, invertYAxis = True)
 
     #setup the left thumb (X & Y) callbacks
-    xboxCont.setupControlCallback(xboxCont.XboxControls.LTHUMBX, leftThumbX)
-    xboxCont.setupControlCallback(xboxCont.XboxControls.LTHUMBY, leftThumbY)
+    #xboxCont.setupControlCallback(xboxCont.XboxControls.LTHUMBX, leftThumbX)
+    #xboxCont.setupControlCallback(xboxCont.XboxControls.LTHUMBY, leftThumbY)
 
     try:
         #start the controller
         xboxCont.start()
-        print "xbox controller running"
+        print "PS3 controller running"
         while True:
             time.sleep(1)
 
