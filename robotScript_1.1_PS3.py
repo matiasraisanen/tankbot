@@ -2,10 +2,9 @@
 
 #Tank movement script version 1.1
 #By Matias Raisanen
-#Works with Xbox controller.
+#Works with PS3 controller.
 #Left analog stick to move left track, right analog for right.
 
-#Before running this script, you should type  "sudo xboxdrv --silent --detach-kernel-driver &" into console
 
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 
@@ -13,6 +12,7 @@ import sys
 import time
 import Robot
 import PS3Controller
+
 
 PS3Cont = PS3Controller.PS3Controller(
 	controllerCallBack = None,
@@ -37,11 +37,11 @@ robot = Robot.Robot(left_trim=LEFT_TRIM, right_trim=RIGHT_TRIM)
 #Left Stick
 def LeftThumbYCallBack(value):
 	if (value) >= 0:
-		robot.LT_forward(int(value*(1)*speed))  #200 determines the speed of the motor (0-255)
-		#print "Left track forward: ", int(value*(1)*100),"%"	#Uncomment this line to see visual feedback
+		robot.LT_forward(int(value*(1)*speed))
+		print "Left track forward: ", int(value*(1)*100),"%"	#Uncomment this line to see visual feedback
 	elif (value) < 0:
 		robot.LT_backward(int(value*(-1)*speed))
-		#print "Left track backward: ", int(value*(-1)*100),"%"	#Uncomment this line to see visual feedback
+		print "Left track backward: ", int(value*(-1)*100),"%"	#Uncomment this line to see visual feedback
 
 PS3Cont.setupControlCallback(
         PS3Cont.PS3Controls.LTHUMBY,
@@ -51,15 +51,14 @@ PS3Cont.setupControlCallback(
 def RightThumbYCallBack(value):
         if (value) >= 0:
                 robot.RT_forward(int(value*(1)*speed))
-                #print "Right track forward: ", int(value*(1)*100),"%"	#Uncomment this line to see visual feedback
+                print "Right track forward: ", int(value*(1)*100),"%"   #Uncomment this line to see visual feedback
         elif (value) < 0:
                 robot.RT_backward(int(value*(-1)*speed))
-                #print "Right track backward: ", int(value*(-1)*100),"%"	#Uncomment this line to see visual feedback
+                print "Right track backward: ", int(value*(-1)*100),"%" #Uncomment this line to see visual feedback
 
 PS3Cont.setupControlCallback(
         PS3Cont.PS3Controls.RTHUMBY,
         RightThumbYCallBack)
-
 
 #DPAD controls for camera
 def DpadUpCallBack(value):
@@ -67,7 +66,6 @@ def DpadUpCallBack(value):
             print "Camera up"	#Uncomment this line to see visual feedback
         elif (value) == 0:
             print "Camera up STOP"	#Uncomment this line to see visual feedback
-
 PS3Cont.setupControlCallback(
         PS3Cont.PS3Controls.DPADUP,
         DpadUpCallBack
@@ -78,7 +76,6 @@ def DpadDownCallBack(value):
             print "Camera down"	#Uncomment this line to see visual feedback
         elif (value) == 0:
             print "Camera down STOP"	#Uncomment this line to see visual feedback
-
 PS3Cont.setupControlCallback(
         PS3Cont.PS3Controls.DPADDOWN,
         DpadDownCallBack
@@ -89,7 +86,6 @@ def DpadLeftCallBack(value):
             print "Camera left"	#Uncomment this line to see visual feedback
         elif (value) == 0:
             print "Camera left STOP"	#Uncomment this line to see visual feedback
-
 PS3Cont.setupControlCallback(
         PS3Cont.PS3Controls.DPADLEFT,
         DpadLeftCallBack
@@ -127,7 +123,7 @@ PS3Cont.setupControlCallback(
 #Press CROSS
 def CrossButtonCallBack(value):
 	if (value) == 1:
-		print "Cross button pressed"	#Uncomment this line to see visual feedback
+		print "CROSS button pressed"	#Uncomment this line to see visual feedback
 PS3Cont.setupControlCallback(
 	PS3Cont.PS3Controls.CROSS,
 	CrossButtonCallBack)
@@ -147,6 +143,31 @@ def TriangleButtonCallBack(value):
 PS3Cont.setupControlCallback(
 	PS3Cont.PS3Controls.TRIANGLE,
 	TriangleButtonCallBack)
+
+#Press L1
+def L1ButtonCallBack(value):
+	if (value) == 1:
+		print "L1 pressed"	#Uncomment this line to see visual feedback
+PS3Cont.setupControlCallback(
+	PS3Cont.PS3Controls.L1,
+	L1ButtonCallBack)
+
+#Press R1
+def R1ButtonCallBack(value):
+	if (value) == 1:
+		print "R1 button pressed"	#Uncomment this line to see visual feedback
+PS3Cont.setupControlCallback(
+	PS3Cont.PS3Controls.R1,
+	R1ButtonCallBack)
+'''
+#Press START
+def StartButtonCallBack(value):
+	if (value) == 1:
+		print "Start pressed"	#Uncomment this line to see visual feedback
+PS3Cont.setupControlCallback(
+	PS3Cont.PS3Controls.START,
+	StartButtonCallBack)
+'''
 
 #Next part runs the actual program:
 

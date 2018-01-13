@@ -1,8 +1,5 @@
-#Martin O'Hanlon
-#www.stuffaboutcode.com
-#A class for reading values from an xbox controller
-# uses xboxdrv and pygame
-# xboxdrv should already be running
+#Class for reading PS3-controller.
+#Based heavily on Martin O'Hanlon's class for an Xbox controller: http://www.stuffaboutcode.com/2014/10/raspberry-pi-xbox-360-controller-python.html
 
 import pygame
 from pygame.locals import *
@@ -48,10 +45,10 @@ event.value
 [1].+1 - top
 
 """
-#Main class for reading the xbox controller values
+#Main class for reading the PS3 controller values
 class PS3Controller(threading.Thread):
 
-    #internal ids for the xbox controls
+    #internal ids for the PS3 controls
     class PS3Controls():
         LTHUMBX = 0
         LTHUMBY = 1
@@ -60,12 +57,12 @@ class PS3Controller(threading.Thread):
         RTRIGGER = 9
         LTRIGGER = 8
         CROSS = 14
-        SPHERE = 13  #ball
-        SQUARE = 15  #square
-        TRIANGLE = 12  #triangle
-        LB = 10
-        RB = 11
-        BACK = 0
+        SPHERE = 13
+        SQUARE = 15
+        TRIANGLE = 12
+        L1 = 10
+        R1 = 11
+        SELECT = 0
         START = 3
         XBOX = 16
         LEFTTHUMB = 1
@@ -74,7 +71,7 @@ class PS3Controller(threading.Thread):
         DPADDOWN = 6
         DPADLEFT = 7
         DPADRIGHT = 5
-    #pygame axis constants for the analogue controls of the xbox controller
+    #pygame axis constants for the analogue controls of the PS3 controller
     class PyGameAxis():
         LTHUMBX = 0
         LTHUMBY = 1
@@ -83,7 +80,7 @@ class PS3Controller(threading.Thread):
         RTRIGGER = 13
         LTRIGGER = 12
 
-    #pygame constants for the buttons of the xbox controller
+    #pygame constants for the buttons of the PS3 controller
     class PyGameButtons():
 	A = 14
         B = 13
@@ -104,24 +101,24 @@ class PS3Controller(threading.Thread):
         DPADRIGHT = 5
 
 
-    #map between pygame axis (analogue stick) ids and xbox control ids
+    #map between pygame axis (analogue stick) ids and PS3 control ids
     AXISCONTROLMAP = {PyGameAxis.LTHUMBX: PS3Controls.LTHUMBX,
                       PyGameAxis.LTHUMBY: PS3Controls.LTHUMBY,
                       PyGameAxis.RTHUMBX: PS3Controls.RTHUMBX,
                       PyGameAxis.RTHUMBY: PS3Controls.RTHUMBY}
     
-    #map between pygame axis (trigger) ids and xbox control ids
+    #map between pygame axis (trigger) ids and PS3 control ids
     TRIGGERCONTROLMAP = {PyGameAxis.RTRIGGER: PS3Controls.RTRIGGER,
                          PyGameAxis.LTRIGGER: PS3Controls.LTRIGGER}
 
-    #map between pygame buttons ids and xbox contorl ids
+    #map between pygame buttons ids and PS3 control ids
     BUTTONCONTROLMAP = {PyGameButtons.A: PS3Controls.CROSS,
                         PyGameButtons.B: PS3Controls.SPHERE,
                         PyGameButtons.X: PS3Controls.SQUARE,
                         PyGameButtons.Y: PS3Controls.TRIANGLE,
-                        PyGameButtons.LB: PS3Controls.LB,
-                        PyGameButtons.RB: PS3Controls.RB,
-                        PyGameButtons.BACK: PS3Controls.BACK,
+                        PyGameButtons.LB: PS3Controls.L1,
+                        PyGameButtons.RB: PS3Controls.R1,
+                        PyGameButtons.BACK: PS3Controls.SELECT,
                         PyGameButtons.START: PS3Controls.START,
                         PyGameButtons.XBOX: PS3Controls.XBOX,
                         PyGameButtons.LEFTTHUMB: PS3Controls.LEFTTHUMB,
@@ -163,17 +160,17 @@ class PS3Controller(threading.Thread):
                               self.PS3Controls.SPHERE:0,
                               self.PS3Controls.SQUARE:0,
                               self.PS3Controls.TRIANGLE:0,
-                              self.PS3Controls.LB:0,
-                              self.PS3Controls.RB:0,
-                              self.PS3Controls.BACK:0,
+                              self.PS3Controls.L1:0,
+                              self.PS3Controls.R1:0,
+                              self.PS3Controls.SELECT:0,
                               self.PS3Controls.START:0,
                               self.PS3Controls.XBOX:0,
                               self.PS3Controls.LEFTTHUMB:0,
                               self.PS3Controls.RIGHTTHUMB:0,
-                              self.PS3Controls.DPADUP:(0),
-                              self.PS3Controls.DPADDOWN:(0),
-                              self.PS3Controls.DPADLEFT:(0),
-                              self.PS3Controls.DPADRIGHT:(0),
+                              self.PS3Controls.DPADUP:0,
+                              self.PS3Controls.DPADDOWN:0,
+                              self.PS3Controls.DPADLEFT:0,
+                              self.PS3Controls.DPADRIGHT:0,
                               }
 
         #setup pygame
@@ -205,10 +202,6 @@ class PS3Controller(threading.Thread):
         return self.controlValues[self.PS3Controls.LTRIGGER]
 
     @property
-    def A(self):
-        return self.controlValues[self.PS3Controls.A]
-
-    @property
     def CROSS(self):
         return self.controlValues[self.PS3Controls.CROSS]
 
@@ -225,16 +218,16 @@ class PS3Controller(threading.Thread):
         return self.controlValues[self.PS3Controls.TRIANGLE]
 
     @property
-    def LB(self):
-        return self.controlValues[self.PS3Controls.LB]
+    def L1(self):
+        return self.controlValues[self.PS3Controls.L1]
 
     @property
-    def RB(self):
-        return self.controlValues[self.PS3Controls.RB]
+    def R1(self):
+        return self.controlValues[self.PS3Controls.R1]
 
     @property
-    def BACK(self):
-        return self.controlValues[self.PS3Controls.BACK]
+    def SELECT(self):
+        return self.controlValues[self.PS3Controls.SELECT]
 
     @property
     def START(self):
@@ -258,7 +251,7 @@ class PS3Controller(threading.Thread):
 
     @property
     def DPADDOWN(self):
-        return self.controlValues[self.PS3Controls.DPADDOWN]    
+        return self.controlValues[self.PS3Controls.DPADDOWN]
 
     @property
     def DPADLEFT(self):
@@ -279,7 +272,7 @@ class PS3Controller(threading.Thread):
         # init the joystick control
         pygame.joystick.init()
         # how many joysticks are there
-        print pygame.joystick.get_count()
+        #print pygame.joystick.get_count()
         # get the first joystick
         joy = pygame.joystick.Joystick(joystickNo)
         # init that joystick
@@ -317,7 +310,7 @@ class PS3Controller(threading.Thread):
                 #d pad
                 elif event.type == JOYHATMOTION:
                     #update control value
-                    print event.type
+                    
                     self.updateControlValue(self.PS3Controls.DPAD, event.value)
 
                 #button pressed and unpressed
