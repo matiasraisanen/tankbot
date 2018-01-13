@@ -38,10 +38,10 @@ robot = Robot.Robot(left_trim=LEFT_TRIM, right_trim=RIGHT_TRIM)
 def LeftThumbYCallBack(value):
 	if (value) >= 0:
 		robot.LT_forward(int(value*(1)*speed))
-		print "Left track forward: ", int(value*(1)*100),"%"	#Uncomment this line to see visual feedback
+		#print "Left track forward: ", int(value*(1)*100),"%"	#Uncomment this line to see visual feedback
 	elif (value) < 0:
 		robot.LT_backward(int(value*(-1)*speed))
-		print "Left track backward: ", int(value*(-1)*100),"%"	#Uncomment this line to see visual feedback
+		#print "Left track backward: ", int(value*(-1)*100),"%"	#Uncomment this line to see visual feedback
 
 PS3Cont.setupControlCallback(
         PS3Cont.PS3Controls.LTHUMBY,
@@ -51,10 +51,10 @@ PS3Cont.setupControlCallback(
 def RightThumbYCallBack(value):
         if (value) >= 0:
                 robot.RT_forward(int(value*(1)*speed))
-                print "Right track forward: ", int(value*(1)*100),"%"   #Uncomment this line to see visual feedback
+                #print "Right track forward: ", int(value*(1)*100),"%"   #Uncomment this line to see visual feedback
         elif (value) < 0:
                 robot.RT_backward(int(value*(-1)*speed))
-                print "Right track backward: ", int(value*(-1)*100),"%" #Uncomment this line to see visual feedback
+                #print "Right track backward: ", int(value*(-1)*100),"%" #Uncomment this line to see visual feedback
 
 PS3Cont.setupControlCallback(
         PS3Cont.PS3Controls.RTHUMBY,
