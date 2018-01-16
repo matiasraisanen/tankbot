@@ -28,7 +28,7 @@ cameraCommandValues = { 'K_UP':0,
                         'K_LEFT':0,
                         'K_RIGHT':0, }
 
-print ("ready!")
+print ("********\n" + "*READY!*\n" + "********")
 while running:
     for event in pygame.event.get():
       #When a key is pressed down
@@ -36,19 +36,19 @@ while running:
 
         #Change values for Tank Movement
         if event.key == pygame.K_w:
-          print("forward!")
+          #print("forward!")
           moveCommandValues['W'] = 1
         if event.key == pygame.K_s:
-          print("reverse")
+          #print("reverse")
           moveCommandValues['S'] = 1
         if event.key == pygame.K_a:
-          print("turn left")
+          #print("turn left")
           moveCommandValues['A']= 1
         if event.key == pygame.K_d:
-          print("turn right")
+          #print("turn right")
           moveCommandValues['D'] = 1
         if event.key == pygame.K_SPACE:
-          print("stop")
+          #print("stop")
           robot.stop()
         
         #Change values for Camera Movement
@@ -76,16 +76,16 @@ while running:
         
         #Change values for Tank Movement
         if event.key == pygame.K_w:
-          print("stopFORWARD")
+          #print("stopFORWARD")
           moveCommandValues['W'] = 0
         if event.key == pygame.K_s:
-          print("stopREVERSE")
+          #print("stopREVERSE")
           moveCommandValues['S'] = 0
         if event.key == pygame.K_a:
-          print("stopLEFT")
+          #print("stopLEFT")
           moveCommandValues['A'] = 0
         if event.key == pygame.K_d:
-          print("stopRIGHT")
+          #print("stopRIGHT")
           moveCommandValues['D'] = 0
 
         #Change values for Camera Movement
@@ -115,8 +115,7 @@ while running:
     if moveCommandValues['D'] == 1:
       robot.RT_backward(speed)
       robot.LT_forward(speed)
-    if moveCommandValues['W'] == 0 and moveCommandValues['A'] == 0 and
-       moveCommandValues['S'] == 0 and moveCommandValues['D'] == 0:
+    if moveCommandValues['W'] == 0 and moveCommandValues['A'] == 0 and moveCommandValues['S'] == 0 and moveCommandValues['D'] == 0:
       robot.stop()
 
 
