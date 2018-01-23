@@ -20,12 +20,12 @@ p = GPIO.PWM(12,50)
 p.start(6.5)
 
 t = GPIO.PWM(16,50)
-t.start(6.5)
+t.start(8)
 
 sleeptime = 0.2
 
-pcycle = 4
-tcycle = 4
+pcycle = 6.5
+tcycle = 8
 
 
 speed = 255	#Speed multiplier, values 0-255
@@ -141,22 +141,42 @@ while running:
       robot.stop()
 
     #Translate values into camera movement
+    sleeptime = .025	#Wait time after a change in angle
+    cyclechange = .30	#Amount to turn in one instance
+    
+    minPcycle = 2.5		#Pan servo rightmost position
+    maxPcycle = 12		#Pan servo leftmost position
+    minTcycle = 4		#Tilt servo upmost position
+    maxTcycle = 10.5	#Tilt servo downmost position
+
     if cameraCommandValues['K_UP'] == 1:
+      tcycle -= cyclechange
+      if tcycle < minTcycle:
+      	tcycle = minTcycle
       t.ChangeDutyCycle(tcycle)
-      tcycle -= .25
-      time.sleep(.05)
+      print tcycle
+      time.sleep(sleeptime)
     if cameraCommandValues['K_DOWN'] == 1:
+      tcycle += cyclechange
+      if tcycle > maxTcycle:
+      	tcycle = maxTcycle
       t.ChangeDutyCycle(tcycle)
-      tcycle += .25
-      time.sleep(.05)
+      print tcycle
+      time.sleep(sleeptime)
     if cameraCommandValues['K_LEFT'] == 1:
+      pcycle += cyclechange
+      if pcycle > maxPcycle:
+      	pcycle = maxPcycle
       p.ChangeDutyCycle(pcycle)
-      pcycle += .25
-      time.sleep(.05)
+      print pcycle
+      time.sleep(sleeptime)
     if cameraCommandValues['K_RIGHT'] == 1:
+      pcycle -= cyclechange
+      if pcycle < minPcycle:
+      	pcycle = minPcycle
       p.ChangeDutyCycle(pcycle)
-      pcycle -= .25
-      time.sleep(.05)
+      print pcycle
+      time.sleep(sleeptime)
 
 pygame.quit()
 quit()
