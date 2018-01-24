@@ -7,14 +7,20 @@ Programmed with Python.
 
 
 ## Hardware
-Chassis: DFRobot's Devastator Tank Mobile Robot Platform with 2x 6V Metal DC Gear Motors
 Controlled by a Raspberry Pi 3, running Raspbian 9.3 Stretch.
 
-Camera: ZeroCam FishEye, sitting on Adafruit Mini Pan-Tilt kit with 2x Tower Pro SG90 Micro Servos.
+Chassis: DFRobot's Devastator Tank Mobile Robot Platform with 2x 6V Metal DC Gear Motors
+
+Camera: ZeroCam FishEye
+
+Camera mount: Adafruit Mini Pan-Tilt kit with 2x Tower Pro SG90 Micro Servos. (product ID 1967)
+https://www.adafruit.com/product/1967
 
 Micro Servos will be controlled via Adafruit 16-Channel PWM / Servo HAT (product ID 2327)
+https://www.adafruit.com/product/2327
 
 DC motors controlled via Adafruit DC & Stepper Motor HAT (product ID 2348)
+https://www.adafruit.com/product/2348
 
 ## Media
 Prototype under development: https://youtu.be/k5S5gY3hc3g
