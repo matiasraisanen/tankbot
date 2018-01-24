@@ -7,7 +7,9 @@ Programmed with Python.
 
 
 ## Hardware
-Controlled by a Raspberry Pi 3, running Raspbian 9.3 Stretch.
+Computer: Raspberry Pi 3 Model B
+
+Operating system: Raspbian 9.3 (Stretch)
 
 Chassis: DFRobot's Devastator Tank Mobile Robot Platform with 2x 6V Metal DC Gear Motors
 
