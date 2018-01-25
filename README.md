@@ -1,7 +1,7 @@
 # TankBot
 Remote controlled tank-robot. Supports keyboard, PS3 controller and XBOX 360 controller. Can be used via SSH/putty or VNC-connection.
 
-How it works: Establish a remote connection to Pi, and move the robot using your keyboard (or a game controller). WASD moves the tank and arrow keys turn the camera. Use uv4l to watch a video stream from the robot at http://[raspi-IP]:9090/stream
+How it works: Establish a remote connection to Pi, and move the robot using your keyboard (or a game controller). WASD moves the tank and arrow keys turn the camera. Use [UV4L](https://www.linux-projects.org/uv4l/) to watch a video stream from the robot at http://[raspi-IP]:9090/stream
 
 Programmed with Python.
 
