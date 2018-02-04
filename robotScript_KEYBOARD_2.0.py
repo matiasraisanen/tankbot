@@ -1,7 +1,7 @@
 #Improved KEYBOARD control with WASD.
 #FORWARD plus TURN results in a slow turn.
 #TURN results in faster turn.
-#Keys can be held down
+#2.0  Keys can be held down
 
 import pygame
 import os, sys

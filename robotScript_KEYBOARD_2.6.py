@@ -3,7 +3,9 @@
 #TURN results in faster turn.
 #2.0	Keys can be held down
 #2.5	Start implementing camera commands. Camera servos connected to GPIO pins
+#2.6  Servo control moved over to Servo Controller board
 
+from Adafruit_PWM_Servo_Driver import PWM
 import pygame
 import os, sys
 import Robot
@@ -11,21 +13,37 @@ import threading
 import RPi.GPIO as GPIO
 import time
 
-GPIO.setmode(GPIO.BOARD)
+#Servo setup:
+#Connect PAN servo to slot 2 and TILT servo to slot 3
 
-GPIO.setup(12, GPIO.OUT)
-GPIO.setup(16, GPIO.OUT)
+pwm = PWM(0x40)
+panServo = 360  #Pan servo, center position
+tiltServo = 420 #Tilt servo, center position
 
-p = GPIO.PWM(12,50)
-p.start(6.5)
+panMAX = 580  #Leftmost position
+panMIN = 150  #Rightmost position
 
-t = GPIO.PWM(16,50)
-t.start(8)
+tiltMAX = 530 #Downmost position
+tiltMIN = 220 #Upmost position
 
-sleeptime = 0.2
+servoSpeed = 5 #Turning speed
 
-pcycle = 6.5
-tcycle = 8
+def setServoPulse(channel, pulse):
+  pulseLength = 1000000                   # 1,000,000 us per second
+  pulseLength /= 40                       # 60 Hz
+  print "%d us per period" % pulseLength
+  pulseLength /= 4096                     # 12 bits of resolution
+  print "%d us per bit" % pulseLength
+  pulse *= 1000
+  pulse /= pulseLength
+  pwm.setPWM(channel, 0, pulse)
+
+
+pwm.setPWMFreq(60)
+pwm.setPWM(3, 0, tiltServo) #Start servos centered
+pwm.setPWM(2, 0, panServo)  #Start servos centered
+
+#END servo setup
 
 
 speed = 255	#Speed multiplier, values 0-255
@@ -38,6 +56,9 @@ screen = pygame.display.set_mode((100, 100))
 running = True
 
 #Dictionary for command values.
+#The use of a dictionary helps us to read multiple values at the same time,
+#and to specify an action related to their value.
+
 moveCommandValues = { 'W':0,
                       'A':0,
                       'S':0,
@@ -49,6 +70,8 @@ cameraCommandValues = { 'K_UP':0,
                         'K_RIGHT':0, }
 
 print ("********\n" + "*READY!*\n" + "********")
+print("Press ESCAPE to QUIT")
+
 while running:
     for event in pygame.event.get():
       #When a key is pressed down
@@ -89,8 +112,6 @@ while running:
         if event.key == pygame.K_ESCAPE:
           print(moveCommandValues)
           print(cameraCommandValues)
-          t.stop()
-          GPIO.cleanup()
           running = False
 
       #When a key is released
@@ -141,42 +162,35 @@ while running:
       robot.stop()
 
     #Translate values into camera movement
-    sleeptime = .025	#Wait time after a change in angle
-    cyclechange = .30	#Amount to turn in one instance
-    
-    minPcycle = 2.5		#Pan servo rightmost position
-    maxPcycle = 12		#Pan servo leftmost position
-    minTcycle = 4		#Tilt servo upmost position
-    maxTcycle = 10.5	#Tilt servo downmost position
+    if cameraCommandValues['K_UP'] == 1:  #If the key is pressed down
+      #print("UP")
+      tiltServo -= servoSpeed     #Change the servo position by the value of servoSpeed.
+      if tiltServo < tiltMIN:     #If positional value exceeds the set limit,
+        tiltServo = tiltMIN       #set it back to its limit value.
+      pwm.setPWM(3, 0, tiltServo) #Move the servo to the specified location
 
-    if cameraCommandValues['K_UP'] == 1:
-      tcycle -= cyclechange
-      if tcycle < minTcycle:
-      	tcycle = minTcycle
-      t.ChangeDutyCycle(tcycle)
-      print tcycle
-      time.sleep(sleeptime)
     if cameraCommandValues['K_DOWN'] == 1:
-      tcycle += cyclechange
-      if tcycle > maxTcycle:
-      	tcycle = maxTcycle
-      t.ChangeDutyCycle(tcycle)
-      print tcycle
-      time.sleep(sleeptime)
+      #print("DOWN")
+      tiltServo += servoSpeed
+      if tiltServo > tiltMAX:
+        tiltServo = tiltMAX
+      pwm.setPWM(3, 0, tiltServo)
+
     if cameraCommandValues['K_LEFT'] == 1:
-      pcycle += cyclechange
-      if pcycle > maxPcycle:
-      	pcycle = maxPcycle
-      p.ChangeDutyCycle(pcycle)
-      print pcycle
-      time.sleep(sleeptime)
+      #print("LEFT")
+      panServo += servoSpeed
+      if panServo > panMAX:
+        panServo = panMAX
+      pwm.setPWM(2, 0, panServo)
+      print(panServo)
+
     if cameraCommandValues['K_RIGHT'] == 1:
-      pcycle -= cyclechange
-      if pcycle < minPcycle:
-      	pcycle = minPcycle
-      p.ChangeDutyCycle(pcycle)
-      print pcycle
-      time.sleep(sleeptime)
+      #print("RIGHT")
+      panServo -= servoSpeed
+      if panServo < panMIN:
+        panServo = panMIN
+      pwm.setPWM(2, 0, panServo)
+      print(panServo)
 
 pygame.quit()
 quit()

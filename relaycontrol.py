@@ -1,4 +1,12 @@
 #!/usr/bin/python  
+
+
+#Code for turning off a 5V relay on GPIO 18 on and off three times,
+#with a two second interval.
+#The pin has to alternate between OUT and IN states instead of HIGH and LOW.
+#Otherwise the relay will not turn off.
+#OUT = active, IN = deactive
+
 import RPi.GPIO as GPIO  
 import time  
   
