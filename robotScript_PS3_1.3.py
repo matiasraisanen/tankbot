@@ -6,6 +6,7 @@
 #Left analog stick to move left track, right analog for right.
 
 #1.2 Added Laser to square and GPIO 18
+#1.3 Added servo control to DPAD via Servo Controller board.
 
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 
@@ -26,6 +27,37 @@ PS3Cont = PS3Controller.PS3Controller(
 	scale = 1,
 	invertYAxis = True)	#Y-axis must be inverted in order for the thumbsticks to work intuitively (forward=positive, back=negative)
 
+#Servo setup:
+#Connect PAN servo to slot 2 and TILT servo to slot 3
+
+pwm = PWM(0x40)
+panServo = 360  #Pan servo, center position
+tiltServo = 420 #Tilt servo, center position
+
+panMAX = 580  #Leftmost position
+panMIN = 150  #Rightmost position
+
+tiltMAX = 530 #Downmost position
+tiltMIN = 220 #Upmost position
+
+servoSpeed = 5 #Turning speed
+
+def setServoPulse(channel, pulse):
+  pulseLength = 1000000                   # 1,000,000 us per second
+  pulseLength /= 40                       # 60 Hz
+  print "%d us per period" % pulseLength
+  pulseLength /= 4096                     # 12 bits of resolution
+  print "%d us per bit" % pulseLength
+  pulse *= 1000
+  pulse /= pulseLength
+  pwm.setPWM(channel, 0, pulse)
+
+
+pwm.setPWMFreq(60)
+pwm.setPWM(3, 0, tiltServo) #Start servos centered
+pwm.setPWM(2, 0, panServo)  #Start servos centered
+
+#END servo setup
 
 LEFT_TRIM = 0
 RIGHT_TRIM = 0
@@ -68,9 +100,11 @@ PS3Cont.setupControlCallback(
 #DPAD controls for camera
 def DpadUpCallBack(value):
         if (value) > 0:
-            print "Camera up"	#Uncomment this line to see visual feedback
-        elif (value) == 0:
-            print "Camera up STOP"	#Uncomment this line to see visual feedback
+      		tiltServo -= servoSpeed     #Change the servo position by the value of servoSpeed.
+      		if tiltServo < tiltMIN:     #If positional value exceeds the set limit,
+        		tiltServo = tiltMIN       #set it back to its limit value.
+      		pwm.setPWM(3, 0, tiltServo) #Move the servo to the specified location        	
+            #print "Camera up"	#Uncomment this line to see visual feedback
 PS3Cont.setupControlCallback(
         PS3Cont.PS3Controls.DPADUP,
         DpadUpCallBack
@@ -78,9 +112,11 @@ PS3Cont.setupControlCallback(
 
 def DpadDownCallBack(value):
         if (value) > 0:
-            print "Camera down"	#Uncomment this line to see visual feedback
-        elif (value) == 0:
-            print "Camera down STOP"	#Uncomment this line to see visual feedback
+        	tiltServo += servoSpeed
+      		if tiltServo > tiltMAX:
+        		tiltServo = tiltMAX
+      		pwm.setPWM(3, 0, tiltServo)
+            #print "Camera down"	#Uncomment this line to see visual feedback
 PS3Cont.setupControlCallback(
         PS3Cont.PS3Controls.DPADDOWN,
         DpadDownCallBack

@@ -20,7 +20,7 @@ pwm = PWM(0x40)
 panServo = 360  #Pan servo, center position
 tiltServo = 420 #Tilt servo, center position
 
-panMAX = 580  #Leftmost position
+panMAX = 590  #Leftmost position
 panMIN = 150  #Rightmost position
 
 tiltMAX = 530 #Downmost position
@@ -107,6 +107,12 @@ while running:
         if event.key == pygame.K_RIGHT:
           #print("Camera right")
           cameraCommandValues['K_RIGHT'] = 1
+
+        if event.key == pygame.K_RCTRL:	#Press right CTRL to center PanTilt-kit
+          panServo = 360
+          tiltServo = 420
+          pwm.setPWM(2, 0, panServo)
+          pwm.setPWM(3, 0, tiltServo)
   
         #Press ESCAPE to QUIT
         if event.key == pygame.K_ESCAPE:
@@ -182,7 +188,7 @@ while running:
       if panServo > panMAX:
         panServo = panMAX
       pwm.setPWM(2, 0, panServo)
-      print(panServo)
+
 
     if cameraCommandValues['K_RIGHT'] == 1:
       #print("RIGHT")
@@ -190,7 +196,7 @@ while running:
       if panServo < panMIN:
         panServo = panMIN
       pwm.setPWM(2, 0, panServo)
-      print(panServo)
+
 
 pygame.quit()
 quit()
