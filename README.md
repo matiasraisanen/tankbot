@@ -13,9 +13,11 @@ Programmed with Python.
 
 **Chassis:** DFRobot's Devastator Tank Mobile Robot Platform with 2x 6V Metal DC Gear Motors [(product ID ROB0128)](https://www.dfrobot.com/product-1477.html)
 
-**Camera:** [ZeroCam FishEye](https://thepihut.com/products/zerocam-fisheye-camera-for-raspberry-pi-zero)
+**Camera:** ~~[ZeroCam FishEye](https://thepihut.com/products/zerocam-fisheye-camera-for-raspberry-pi-zero)~~ Camera cable tore -> no camera at the moment
 
 **Camera mount:** Adafruit Mini Pan-Tilt kit with 2x Tower Pro SG90 Micro Servos. [(product ID 1967)](https://www.adafruit.com/product/1967)
+
+**Ultrasonic Sensor:** [HC-SR04](https://thepihut.com/products/ultrasonic-distance-sensor-hcsr04)
 
 **Servo controller:** Adafruit 16-Channel PWM / Servo HAT [(product ID 2327)](https://www.adafruit.com/product/2327)
 

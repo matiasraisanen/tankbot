@@ -29,12 +29,13 @@ GPIO.output(TRIG, False)
 
 pwm = PWM(0x40)
 panCenter = 365 #Pan servo, center position
+tiltCenter = 420
 panMAX = 610  #Leftmost position
 panMIN = 150  #Rightmost position
 
 
 pwm.setPWMFreq(60)
-pwm.setPWM(3, 0, 420) #Start servos centered
+pwm.setPWM(3, 0, 500) #Start tilt servo at a slight downward angle.
 pwm.setPWM(2, 0, panCenter)  #Start pan servo at center
 
 robot = Robot.Robot(left_trim=0, right_trim=0)
@@ -86,6 +87,10 @@ def sonarSweep():
 		pass
 	pwm.setPWM(2, 0, panCenter)
 	
+	'''
+	TO BE ADDED: Start turning into desired direction, until distance is greater than 25!!
+	'''
+	
 	if sonarAngle == 150:
 		return "HardRight"
 	elif sonarAngle == 235:
@@ -100,13 +105,13 @@ def sonarSweep():
 		return "Something Went Wrong"
 
 def moveBot():
-	shortTime = 1
-	longTime = 2
-	fullTurn = 3
+	shortTurn = 75
+	longTurn = 140
+	fullTurn = 250
 	running = True
-	botSpeed = 75
+	botSpeed = 150
 
-
+	
 	while running:
 		distance = measureDist()
 		if distance > 20:
@@ -120,30 +125,30 @@ def moveBot():
 			print "sonarSweep suoritettu: ", result, "\n"
 
 			if result == "HardRight":
-				robot.RT_backward(botSpeed)
-				robot.LT_forward(botSpeed)
-				time.sleep(longTime)
+				robot.RT_backward(longTurn)
+				robot.LT_forward(longTurn)
+				time.sleep(1)
 			if result == "Right":
-				robot.RT_backward(botSpeed)
-				robot.LT_forward(botSpeed)
-				time.sleep(shortTime)
+				robot.RT_backward(shortTurn)
+				robot.LT_forward(shortTurn)
+				time.sleep(1)
 			if result == "HardLeft":
-				robot.RT_forward(botSpeed)
-				robot.LT_backward(botSpeed)
-				time.sleep(longTime)
+				robot.RT_forward(longTurn)
+				robot.LT_backward(longTurn)
+				time.sleep(1)
 			if result == "Left":
-				robot.RT_forward(botSpeed)
-				robot.LT_backward(botSpeed)
-				time.sleep(shortTime)
+				robot.RT_forward(shortTurn)
+				robot.LT_backward(shortTurn)
+				time.sleep(1)
 			if result == "FullTurn":
-				robot.RT_backward(botSpeed)
-				robot.LT_forward(botSpeed)
-				time.sleep(fullTurn)				
+				robot.RT_backward(fullTurn)
+				robot.LT_forward(fullTurn)
+				time.sleep(1)				
 
 
 
 		time.sleep(.5)
-
+	
 	print("Stop")
 	robot.stop()
 

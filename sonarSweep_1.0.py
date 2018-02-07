@@ -23,7 +23,7 @@ panMIN = 150  #Rightmost position
 
 
 pwm.setPWMFreq(60)
-pwm.setPWM(3, 0, 420) #Start servos centered
+#pwm.setPWM(3, 0, 420) #Start servos centered
 pwm.setPWM(2, 0, panCenter)  #Start pan servo at center
 
 
