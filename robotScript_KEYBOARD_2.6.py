@@ -17,10 +17,10 @@ import time
 #Connect PAN servo to slot 2 and TILT servo to slot 3
 
 pwm = PWM(0x40)
-panServo = 360  #Pan servo, center position
+panServo = 365  #Pan servo, center position
 tiltServo = 420 #Tilt servo, center position
 
-panMAX = 590  #Leftmost position
+panMAX = 610  #Leftmost position
 panMIN = 150  #Rightmost position
 
 tiltMAX = 530 #Downmost position
@@ -109,7 +109,7 @@ while running:
           cameraCommandValues['K_RIGHT'] = 1
 
         if event.key == pygame.K_RCTRL:	#Press right CTRL to center PanTilt-kit
-          panServo = 360
+          panServo = 365
           tiltServo = 420
           pwm.setPWM(2, 0, panServo)
           pwm.setPWM(3, 0, tiltServo)
