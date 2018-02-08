@@ -9,10 +9,9 @@ GPIO.setwarnings(False)
 
 '''
 Bot functions as follows:
-Measure distance.
+Execute a distance scan every 10ms.
 If distance to object is greater than 20cm, drive forward.
-Execute a new scan every 10ms.
-If distance is less than 20cm, stop and execute a sweeping scan in 180 degree arc, from right
+If distance is less than 20cm, stop and execute a sweeping scan in 180 degree arc, starting from right
 to left. Start scanning for a direction, where distance to object is greater than 25.
 If found, turn the bot. If not found, turn around fully.
 '''
@@ -151,7 +150,10 @@ def moveBot():
 	
 	print("Stop")
 	robot.stop()
-
-moveBot()
-GPIO.cleanup()
-robot.stop()
+	
+def main():
+	moveBot()
+	GPIO.cleanup()
+	
+if __name__ == "__main__":
+	main()
