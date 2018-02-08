@@ -28,7 +28,7 @@ Programmed with Python.
 
 [Pan/tilt-kit, keyboard control](https://www.youtube.com/watch?v=GreMILf87uk)
 
-[Relay controller laser pointer](https://www.youtube.com/watch?v=lVK4EL7_Mjs)
+[Relay controlled laser pointer](https://www.youtube.com/watch?v=lVK4EL7_Mjs)
 
 [SonarBot 2.0 in action](https://youtu.be/kYUl4-z5d7g)
 
