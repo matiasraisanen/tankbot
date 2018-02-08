@@ -30,11 +30,10 @@ Programmed with Python.
 
 [Relay controlled laser pointer](https://www.youtube.com/watch?v=lVK4EL7_Mjs)
 
-[SonarBot 2.0 in action](https://youtu.be/kYUl4-z5d7g)
-
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=kYUl4-z5d7g"
 target="_blank"><img src="http://img.youtube.com/vi/kYUl4-z5d7g/0.jpg" 
 alt="SonarBot" width="240" height="180" border="10" /></a>
+[SonarBot 2.0 in action](https://youtu.be/kYUl4-z5d7g)
 
 
 
