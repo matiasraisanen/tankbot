@@ -21,10 +21,16 @@ Programmed with Python.
 
 **Servo controller:** Adafruit 16-Channel PWM / Servo HAT [(product ID 2327)](https://www.adafruit.com/product/2327)
 
-
 **DC motor controller:** Adafruit DC & Stepper Motor HAT [(product ID 2348)](https://www.adafruit.com/product/2348)
 
 ## Media links
-[Prototype, under development](https://youtu.be/k5S5gY3hc3g)
+[Early version, keyboard control](https://youtu.be/k5S5gY3hc3g)
 
-[Pan/tilt-kit working](https://www.youtube.com/watch?v=GreMILf87uk)
+[Pan/tilt-kit, keyboard control](https://www.youtube.com/watch?v=GreMILf87uk)
+
+[Relay controller laser pointer](https://www.youtube.com/watch?v=lVK4EL7_Mjs)
+
+[SonarBot 2.0 in action](https://youtu.be/kYUl4-z5d7g)
+
+
+
