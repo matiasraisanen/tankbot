@@ -9,7 +9,7 @@ GPIO.setwarnings(False)
 
 '''
 Bot functions as follows:
-Execute a distance scan every 10ms.
+Execute a distance scan every 50ms.
 If distance to object is greater than 20cm, drive forward.
 If distance is less than 20cm, stop and execute a sweeping scan in 180 degree arc, starting from right
 to left. Start scanning for a direction, where distance to object is greater than 25.
@@ -34,10 +34,17 @@ panMIN = 150  #Rightmost position
 
 
 pwm.setPWMFreq(60)
-pwm.setPWM(3, 0, 500) #Start tilt servo at a slight downward angle.
+pwm.setPWM(3, 0, 470) #Start tilt servo at a slight downward angle.
 pwm.setPWM(2, 0, panCenter)  #Start pan servo at center
 
 robot = Robot.Robot(left_trim=0, right_trim=0)
+
+def laserOn():
+	GPIO.setup(7, GPIO.OUT)
+
+def laserOff():
+	GPIO.setup(7, GPIO.IN)
+
 
 def measureDist():
 	GPIO.output(TRIG, True)
@@ -61,10 +68,12 @@ def sonarSweep():
 	sonarAngle = 150						#Start on the right, or 0 degrees
 	pwm.setPWM(2, 0, sonarAngle)
 	time.sleep(.2)
+	laserOn()
 	distance = measureDist()				#Measure distance to object
 	print "First measure: ", distance
 	time.sleep(.2)
 
+	#Next we want to find out a direction to turn to
 	if distance < 25:						#If object is closer than 25cm, turn the sonar
 		sonarAngle = 110					#Change angle value to 110. Servo angle values are not directly proportional to their values in degrees, hence the manual change here.
 		while distance < 25:				
@@ -74,7 +83,7 @@ def sonarSweep():
 			if sonarAngle > 610:			#If we exceed maximum angle of 610, turn the whole robot on the spot
 				print("No room! Turn around")
 				pwm.setPWM(2, 0, panCenter)	
-				return "FullTurn"
+				break
 
 			pwm.setPWM(2, 0, sonarAngle)	#Turn the sonar to the new angle
 			print "Let's try a new angle:", sonarAngle
@@ -82,25 +91,36 @@ def sonarSweep():
 			distance = measureDist()		#Scan for objects
 			print "New measure: ", distance
 			time.sleep(.1)
-	else:
-		pass
 	pwm.setPWM(2, 0, panCenter)
+	time.sleep(.5)
 	
-	'''
-	TO BE ADDED: Start turning into desired direction, until distance is greater than 25!!
-	'''
+	#Next we start turning into the direction, until we have at least 30cm room.
 	
-	if sonarAngle == 150:
-		return "HardRight"
-	elif sonarAngle == 235:
-		return "Right"
-	elif sonarAngle == 360:
-		return "Straight"
-	elif sonarAngle == 485:
-		return "Left"
-	elif sonarAngle == 610:
-		return "HardLeft"
+	if sonarAngle < 360:	#Turn right
+		distance = measureDist()
+		time.sleep(.2)
+		while distance < 30:
+			robot.RT_backward(150)
+			robot.LT_forward(150)
+			distance = measureDist()
+			time.sleep(.5)
+		laserOff()
+		robot.stop()
+		return "dist below 30"
+
+	elif sonarAngle > 360:	#Turn left
+		distance = measureDist()
+		time.sleep(.2)
+		while distance < 30:
+			robot.RT_forward(150)
+			robot.LT_backward(150)
+			distance = measureDist()
+			time.sleep(.5)
+		laserOff()
+		robot.stop()
+		return "dist above 30"
 	else:
+		laserOff()
 		return "Something Went Wrong"
 
 def moveBot():
@@ -108,7 +128,7 @@ def moveBot():
 	longTurn = 140
 	fullTurn = 250
 	running = True
-	botSpeed = 150
+	botSpeed = 200
 
 	
 	while running:
@@ -121,31 +141,7 @@ def moveBot():
 			print "Stop. Distance: ", distance
 			robot.stop()
 			result = sonarSweep()
-			print "sonarSweep suoritettu: ", result, "\n"
-
-			if result == "HardRight":
-				robot.RT_backward(longTurn)
-				robot.LT_forward(longTurn)
-				time.sleep(1)
-			if result == "Right":
-				robot.RT_backward(shortTurn)
-				robot.LT_forward(shortTurn)
-				time.sleep(1)
-			if result == "HardLeft":
-				robot.RT_forward(longTurn)
-				robot.LT_backward(longTurn)
-				time.sleep(1)
-			if result == "Left":
-				robot.RT_forward(shortTurn)
-				robot.LT_backward(shortTurn)
-				time.sleep(1)
-			if result == "FullTurn":
-				robot.RT_backward(fullTurn)
-				robot.LT_forward(fullTurn)
-				time.sleep(1)				
-
-
-
+			print result
 		time.sleep(.5)
 	
 	print("Stop")
