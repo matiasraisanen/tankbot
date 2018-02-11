@@ -24,10 +24,13 @@ Programmed with Python.
 **DC motor controller:** Adafruit DC & Stepper Motor HAT [(product ID 2348)](https://www.adafruit.com/product/2348)
 
 ## Media links
-|--------------------------|--------------------------|
-| <a href="http://www.youtube.com/watch?feature=player_embedded&v=k5S5gY3hc3g" target="_blank"><img src="http://img.youtube.com/vi/k5S5gY3hc3g/0.jpg" alt="KBControl" width="240" height="180" border="10" /></a><br> [Early version, keyboard control](https://youtu.be/k5S5gY3hc3g) | <a href="http://www.youtube.com/watch?feature=player_embedded&v=GreMILf87uk" target="_blank"><img src="http://img.youtube.com/vi/GreMILf87uk/0.jpg" alt="PanTil KBControl" width="240" height="180" border="10" /></a><br>[Pan/tilt-kit, keyboard control](https://www.youtube.com/watch?v=GreMILf87uk) |
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=k5S5gY3hc3g" target="_blank"><img src="http://img.youtube.com/vi/k5S5gY3hc3g/0.jpg" alt="KBControl" width="240" height="180" border="10" /></a><br> [Early version, keyboard control](https://youtu.be/k5S5gY3hc3g)
 
-| <a href="http://www.youtube.com/watch?feature=player_embedded&v=lVK4EL7_Mjs" target="_blank"><img src="http://img.youtube.com/vi/lVK4EL7_Mjs/0.jpg" alt="Relay Laser Pointer" width="240" height="180" border="10" /></a><br>[Relay controlled laser pointer](https://www.youtube.com/watch?v=lVK4EL7_Mjs) | <a href="http://www.youtube.com/watch?feature=player_embedded&v=kYUl4-z5d7g" target="_blank"><img src="http://img.youtube.com/vi/kYUl4-z5d7g/0.jpg" alt="SonarBot" width="240" height="180" border="10" /></a><br> [SonarBot 2.0 in action](https://youtu.be/kYUl4-z5d7g) |
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=GreMILf87uk" target="_blank"><img src="http://img.youtube.com/vi/GreMILf87uk/0.jpg" alt="PanTil KBControl" width="240" height="180" border="10" /></a><br>[Pan/tilt-kit, keyboard control](https://www.youtube.com/watch?v=GreMILf87uk)
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=lVK4EL7_Mjs" target="_blank"><img src="http://img.youtube.com/vi/lVK4EL7_Mjs/0.jpg" alt="Relay Laser Pointer" width="240" height="180" border="10" /></a><br>[Relay controlled laser pointer](https://www.youtube.com/watch?v=lVK4EL7_Mjs)
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=kYUl4-z5d7g" target="_blank"><img src="http://img.youtube.com/vi/kYUl4-z5d7g/0.jpg" alt="SonarBot" width="240" height="180" border="10" /></a><br> [SonarBot 2.0 in action](https://youtu.be/kYUl4-z5d7g) |
 
 
 
