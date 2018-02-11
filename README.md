@@ -30,7 +30,4 @@ Programmed with Python.
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=lVK4EL7_Mjs" target="_blank"><img src="http://img.youtube.com/vi/lVK4EL7_Mjs/0.jpg" alt="Relay Laser Pointer" width="240" height="180" border="10" /></a><br>[Relay controlled laser pointer](https://www.youtube.com/watch?v=lVK4EL7_Mjs)
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=kYUl4-z5d7g" target="_blank"><img src="http://img.youtube.com/vi/kYUl4-z5d7g/0.jpg" alt="SonarBot" width="240" height="180" border="10" /></a><br> [SonarBot 2.0 in action](https://youtu.be/kYUl4-z5d7g) |
-
-
-
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=kYUl4-z5d7g" target="_blank"><img src="http://img.youtube.com/vi/kYUl4-z5d7g/0.jpg" alt="SonarBot" width="240" height="180" border="10" /></a><br> [SonarBot 2.0 in action](https://youtu.be/kYUl4-z5d7g)
