@@ -12,6 +12,9 @@ import Robot
 import threading
 import RPi.GPIO as GPIO
 import time
+import sonicBot
+
+GPIO.setmode(GPIO.BOARD)
 
 #Servo setup:
 #Connect PAN servo to slot 2 and TILT servo to slot 3
@@ -27,17 +30,6 @@ tiltMAX = 530 #Downmost position
 tiltMIN = 220 #Upmost position
 
 servoSpeed = 5 #Turning speed
-
-def setServoPulse(channel, pulse):
-  pulseLength = 1000000                   # 1,000,000 us per second
-  pulseLength /= 40                       # 60 Hz
-  print "%d us per period" % pulseLength
-  pulseLength /= 4096                     # 12 bits of resolution
-  print "%d us per bit" % pulseLength
-  pulse *= 1000
-  pulse /= pulseLength
-  pwm.setPWM(channel, 0, pulse)
-
 
 pwm.setPWMFreq(60)
 pwm.setPWM(3, 0, tiltServo) #Start servos centered
@@ -67,7 +59,11 @@ moveCommandValues = { 'W':0,
 cameraCommandValues = { 'K_UP':0,
                         'K_DOWN':0,
                         'K_LEFT':0,
-                        'K_RIGHT':0, }
+                        'K_RIGHT':0,
+                         }
+
+functionCommandValues = { 'K_SPACE':0, }
+
 
 print ("********\n" + "*READY!*\n" + "********")
 print("Press ESCAPE to QUIT")
@@ -107,6 +103,8 @@ while running:
         if event.key == pygame.K_RIGHT:
           #print("Camera right")
           cameraCommandValues['K_RIGHT'] = 1
+        if event.key == pygame.K_SPACE:          
+          functionCommandValues['K_SPACE'] = 1
 
         if event.key == pygame.K_RCTRL:	#Press right CTRL to center PanTilt-kit
           panServo = 365
@@ -150,6 +148,9 @@ while running:
         if event.key == pygame.K_RIGHT:
           #print("Camera right STOP")
           cameraCommandValues['K_RIGHT'] = 0
+
+        if event.key == pygame.K_SPACE:
+          functionCommandValues['K_SPACE'] = 0
 
     #Translate values into movement commands
     if moveCommandValues['W'] == 1:
@@ -196,6 +197,11 @@ while running:
       if panServo < panMIN:
         panServo = panMIN
       pwm.setPWM(2, 0, panServo)
+
+    if functionCommandValues['K_SPACE'] == 1:
+      GPIO.setup(7, GPIO.OUT)
+    if functionCommandValues['K_SPACE'] == 0:
+      GPIO.setup(7, GPIO.IN)
 
 
 pygame.quit()
