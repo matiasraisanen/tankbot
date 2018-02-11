@@ -5,6 +5,22 @@ How it works: Establish a remote connection to Pi, and move the robot using your
 
 Programmed with Python.
 
+## Main programs
+
+**sonarBot_X.X.py** ->
+Autonomous robot. Detects and avoids obstacles using a sonar sensor. Once an object is close (20cm), stops and scans for a new direction.
+
+**robotScript_KEYBOARD_X.X.py** ->
+User-controlled tankbot. Use keyboard to move.
+
+**robotScript_PS3_X.X.py** ->
+User-controlled tankbot. Use PS3 controller to move.
+
+Other programs are mainly tests, or programs for the HATs provided by Adafruit.
+
+
+
+
 
 ## Hardware
 **Computer:** [Raspberry Pi 3 Model B](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
