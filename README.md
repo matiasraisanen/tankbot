@@ -17,7 +17,7 @@ Programmed with Python.
 
 **Camera mount:** Adafruit Mini Pan-Tilt kit with 2x Tower Pro SG90 Micro Servos. [(product ID 1967)](https://www.adafruit.com/product/1967)
 
-**Ultrasonic Sensor:** [HC-SR04](https://thepihut.com/products/ultrasonic-distance-sensor-hcsr04)
+**Ultrasonic distance sensor:** [HC-SR04](https://thepihut.com/products/ultrasonic-distance-sensor-hcsr04)
 
 **Servo controller:** Adafruit 16-Channel PWM / Servo HAT [(product ID 2327)](https://www.adafruit.com/product/2327)
 
