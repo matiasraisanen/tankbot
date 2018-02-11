@@ -5,6 +5,22 @@ How it works: Establish a remote connection to Pi, and move the robot using your
 
 Programmed with Python.
 
+## Main programs
+
+**sonarBot_X.X.py** ->
+Autonomous robot. Detects and avoids obstacles using a sonar sensor. Once an object is close (20cm), stops and scans for a new direction.
+
+**tankbot_KEYBOARD_X.X.py** ->
+User-controlled tankbot. Use keyboard to move.
+
+**tankbot_PS3_X.X.py** ->
+User-controlled tankbot. Use PS3 controller to move.
+
+Other programs are mainly tests, or programs for the HATs provided by Adafruit.
+
+
+
+
 
 ## Hardware
 **Computer:** [Raspberry Pi 3 Model B](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
@@ -17,14 +33,17 @@ Programmed with Python.
 
 **Camera mount:** Adafruit Mini Pan-Tilt kit with 2x Tower Pro SG90 Micro Servos. [(product ID 1967)](https://www.adafruit.com/product/1967)
 
-**Ultrasonic Sensor:** [HC-SR04](https://thepihut.com/products/ultrasonic-distance-sensor-hcsr04)
+**Ultrasonic distance sensor:** [HC-SR04](https://thepihut.com/products/ultrasonic-distance-sensor-hcsr04)
 
 **Servo controller:** Adafruit 16-Channel PWM / Servo HAT [(product ID 2327)](https://www.adafruit.com/product/2327)
 
-
 **DC motor controller:** Adafruit DC & Stepper Motor HAT [(product ID 2348)](https://www.adafruit.com/product/2348)
 
-## Media links
-[Prototype, under development](https://youtu.be/k5S5gY3hc3g)
+## Media
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=k5S5gY3hc3g" target="_blank"><img src="http://img.youtube.com/vi/k5S5gY3hc3g/0.jpg" alt="KBControl" width="240" height="180" border="10" /></a><br> [Early version, keyboard control](https://youtu.be/k5S5gY3hc3g)
 
-[Pan/tilt-kit working](https://www.youtube.com/watch?v=GreMILf87uk)
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=GreMILf87uk" target="_blank"><img src="http://img.youtube.com/vi/GreMILf87uk/0.jpg" alt="PanTil KBControl" width="240" height="180" border="10" /></a><br>[Pan/tilt-kit, keyboard control](https://www.youtube.com/watch?v=GreMILf87uk)
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=lVK4EL7_Mjs" target="_blank"><img src="http://img.youtube.com/vi/lVK4EL7_Mjs/0.jpg" alt="Relay Laser Pointer" width="240" height="180" border="10" /></a><br>[Relay controlled laser pointer](https://www.youtube.com/watch?v=lVK4EL7_Mjs)
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=kYUl4-z5d7g" target="_blank"><img src="http://img.youtube.com/vi/kYUl4-z5d7g/0.jpg" alt="SonarBot" width="240" height="180" border="10" /></a><br> [SonarBot 2.0 in action](https://youtu.be/kYUl4-z5d7g)
