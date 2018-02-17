@@ -3,7 +3,7 @@
 #TURN results in faster turn.
 #2.0	Keys can be held down
 #2.5	Start implementing camera commands. Camera servos connected to GPIO pins
-#2.6  Servo control moved over to Servo Controller board
+#2.6  Servo control moved over to Servo Controller board. Added laser to SPACEBAR and GPIO 7
 
 from Adafruit_PWM_Servo_Driver import PWM
 import pygame
