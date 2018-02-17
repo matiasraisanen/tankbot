@@ -7,7 +7,7 @@ Programmed with Python.
 
 ## Main programs
 
-**sonarBot_X.X.py** ->
+**sonicBot.py** ->
 Autonomous robot. Detects and avoids obstacles using a sonar sensor. Once an object is close (20cm), stops and scans for a new direction.
 
 **tankbot_KEYBOARD_X.X.py** ->
