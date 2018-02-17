@@ -9,11 +9,10 @@ GPIO.setwarnings(False)
 
 '''
 Bot functions as follows:
-Execute a distance scan every 50ms.
-If distance to object is greater than 20cm, drive forward.
-If distance is less than 20cm, stop and execute a sweeping scan in 180 degree arc, starting from right
-to left. Start scanning for a direction, where distance to object is greater than 25.
-If found, turn the bot. If not found, turn around fully.
+Execute a distance scan every 500ms.
+If distance to object is greater than 25cm, drive forward.
+If distance is less than 25cm, stop and scan the environment at 45 and 135 degree angles.
+Turn the bot to the direction where the distance to object was greater. Turn until at least 50cm clearance.
 '''
 
 TRIG = 18 
@@ -31,7 +30,7 @@ panMIN = 150  #Rightmost position
 
 
 pwm.setPWMFreq(60)
-pwm.setPWM(3, 0, 470) #Start tilt servo at a slight downward angle.
+pwm.setPWM(3, 0, 450) #Start tilt servo at a slight downward angle.
 pwm.setPWM(2, 0, panCenter)  #Start pan servo at center
 
 robot = Robot.Robot(left_trim=0, right_trim=0)
@@ -91,12 +90,12 @@ def sonarSweep():
 	pwm.setPWM(2, 0, panCenter)
 	time.sleep(.5)
 	
-	#Next we start turning into the direction, until we have at least 30cm room.
+	#Next we start turning into the direction, until we have at least 50cm room.
 	
 	if sonarAngle < 360:	#Turn right
 		distance = measureDist()
 		time.sleep(.2)
-		while distance < 30:
+		while distance < 50:
 			robot.RT_backward(150)
 			robot.LT_forward(150)
 			distance = measureDist()
@@ -108,7 +107,7 @@ def sonarSweep():
 	elif sonarAngle > 360:	#Turn left
 		distance = measureDist()
 		time.sleep(.2)
-		while distance < 30:
+		while distance < 50:
 			robot.RT_forward(150)
 			robot.LT_backward(150)
 			distance = measureDist()
@@ -128,14 +127,14 @@ def sonarSweep2():
 	time.sleep(.2)
 	laserOn()
 	distanceRight = measureDist()
-	#print "Distance on right: ", distanceRight
+	print "Distance on right: ", distanceRight
 	time.sleep(.2)
 
 	sonarAngle = 485						#Measure on the left at 135 degrees
 	pwm.setPWM(2, 0, sonarAngle)
 	time.sleep(.2)
 	distanceLeft = measureDist()
-	#print "Distance on left: ", distanceLeft
+	print "Distance on left: ", distanceLeft
 	time.sleep(.2)
 
 	sonarAngle = panCenter					#Return the sonar to center
@@ -144,25 +143,29 @@ def sonarSweep2():
 
 	#Next we want to find out a direction to turn to
 	if distanceRight > distanceLeft:	#Compare values, and choose the direction of turn
+		print "Right has more room. Turning right."
 		distance = measureDist()
 		time.sleep(.2)
-		while distance < 30:	#Turn right until clearance is at least 30cm.
+		while distance < 45:	#Turn right until clearance is at least 30cm.
+			print "Clearance of 40cm reached on right. Turning."
 			robot.RT_backward(150)
 			robot.LT_forward(150)
 			distance = measureDist()
-			time.sleep(.5)
+			time.sleep(.2)
 		laserOff()
 		robot.stop()
 		return "Right turn complete"
 
 	else:						#Turn left until clearance of at least 30cm.
+		print "Left has more room."
 		distance = measureDist()
 		time.sleep(.2)
-		while distance < 30:
+		while distance < 45:
+			print "Clearance of 40cm reacehd on left. Turning."
 			robot.RT_forward(150)
 			robot.LT_backward(150)
 			distance = measureDist()
-			time.sleep(.5)
+			time.sleep(.2)
 		laserOff()
 		robot.stop()
 		return "Left turn complete"
@@ -172,19 +175,21 @@ def moveBot():
 
 	running = True
 	botSpeed = 200
-
 	
 	while running:
 		distance = measureDist()
-		if distance > 20:
-			#print "Forward. Distance: ", distance
+
+		if distance > 40:
+			print "Forward. Distance: ", distance
 			robot.RT_forward(botSpeed)
 			robot.LT_forward(botSpeed)
 		else:
-			#print "Stop. Distance: ", distance
+			print "Stop. Distance: ", distance
+			runCount = 0
 			robot.stop()
 			result = sonarSweep2()
-			#print result
+			print result
+
 		time.sleep(.5)
 	
 	print("Stop")
