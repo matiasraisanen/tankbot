@@ -39,6 +39,7 @@ pwm.setPWM(2, 0, panServo)  #Start servos centered
 
 
 speed = 255	#Speed multiplier, values 0-255
+reducedSpeed = int(speed*0.50)  #Alternate track speed for turning. The lower the percentage, the lower the turning radius and forward momentum.
 robot = Robot.Robot(left_trim=0, right_trim=0)
 
 #os.environ['SDL_VIDEODRIVER'] = 'dummy'
@@ -153,20 +154,78 @@ while running:
           functionCommandValues['K_SPACE'] = 0
 
     #Translate values into movement commands
-    if moveCommandValues['W'] == 1:
+
+    #Only forward
+    if  moveCommandValues['W'] == 1 \
+    and moveCommandValues['A'] == 0 \
+    and moveCommandValues['S'] == 0 \
+    and moveCommandValues['D'] == 0:
       robot.RT_forward(speed)
       robot.LT_forward(speed)
-    if moveCommandValues['S'] == 1:
+
+    #Left turn while moving forward
+    if  moveCommandValues['W'] == 1 \
+    and moveCommandValues['A'] == 1 \
+    and moveCommandValues['S'] == 0 \
+    and moveCommandValues['D'] == 0:
+      robot.RT_forward(speed)
+      robot.LT_forward(reducedSpeed)
+
+    #Right turn while moving forward
+    if  moveCommandValues['W'] == 1 \
+    and moveCommandValues['A'] == 0 \
+    and moveCommandValues['S'] == 0 \
+    and moveCommandValues['D'] == 1:
+      robot.RT_forward(reducedSpeed)
+      robot.LT_forward(speed)
+
+    #Only reverse
+    if  moveCommandValues['W'] == 0 \
+    and moveCommandValues['A'] == 0 \
+    and moveCommandValues['S'] == 1 \
+    and moveCommandValues['D'] == 0:
       robot.RT_backward(speed)
       robot.LT_backward(speed)
-    if moveCommandValues['A'] == 1:
+
+    #Left turn while reversing
+    if  moveCommandValues['W'] == 0 \
+    and moveCommandValues['A'] == 1 \
+    and moveCommandValues['S'] == 1 \
+    and moveCommandValues['D'] == 0:
+      robot.RT_backward(reducedSpeed)
+      robot.LT_backward(speed)
+
+    #Right turn while reversing
+    if  moveCommandValues['W'] == 0 \
+    and moveCommandValues['A'] == 0 \
+    and moveCommandValues['S'] == 1 \
+    and moveCommandValues['D'] == 1:
+      robot.RT_backward(speed)
+      robot.LT_backward(reducedSpeed)
+
+    #Only left turn
+    if  moveCommandValues['W'] == 0 \
+    and moveCommandValues['A'] == 1 \
+    and moveCommandValues['S'] == 0 \
+    and moveCommandValues['D'] == 0:
       robot.RT_forward(speed)
       robot.LT_backward(speed)
-    if moveCommandValues['D'] == 1:
+
+    #Only right turn
+    if  moveCommandValues['W'] == 0 \
+    and moveCommandValues['A'] == 0 \
+    and moveCommandValues['S'] == 0 \
+    and moveCommandValues['D'] == 1:
       robot.RT_backward(speed)
       robot.LT_forward(speed)
-    if moveCommandValues['W'] == 0 and moveCommandValues['A'] == 0 and moveCommandValues['S'] == 0 and moveCommandValues['D'] == 0:
+
+    #Stop when no keys pressed
+    if moveCommandValues['W'] == 0 \
+    and moveCommandValues['A'] == 0 \
+    and moveCommandValues['S'] == 0 \
+    and moveCommandValues['D'] == 0:
       robot.stop()
+
 
     #Translate values into camera movement
     if cameraCommandValues['K_UP'] == 1:  #If the key is pressed down

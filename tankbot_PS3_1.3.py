@@ -9,6 +9,7 @@
 #1.3 Added servo control to DPAD via Servo Controller board.
 
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
+from Adafruit_PWM_Servo_Driver import PWM
 
 import RPi.GPIO as GPIO
 import sys
@@ -16,7 +17,7 @@ import time
 import Robot
 import PS3Controller
 
-GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BOARD)
 
 
 PS3Cont = PS3Controller.PS3Controller(
@@ -99,11 +100,12 @@ PS3Cont.setupControlCallback(
 
 #DPAD controls for camera
 def DpadUpCallBack(value):
+        global tiltServo
+        global servoSpeed
+        global tiltMAX
         if (value) > 0:
-      		tiltServo -= servoSpeed     #Change the servo position by the value of servoSpeed.
-      		if tiltServo < tiltMIN:     #If positional value exceeds the set limit,
-        		tiltServo = tiltMIN       #set it back to its limit value.
-      		pwm.setPWM(3, 0, tiltServo) #Move the servo to the specified location        	
+      		pwm.setPWM(3, 0, (tiltServo+5)) #Move the servo to the specified location
+      		
             #print "Camera up"	#Uncomment this line to see visual feedback
 PS3Cont.setupControlCallback(
         PS3Cont.PS3Controls.DPADUP,
@@ -111,11 +113,17 @@ PS3Cont.setupControlCallback(
         )
 
 def DpadDownCallBack(value):
+        global tiltServo
+        global servoSpeed
+        global tiltMAX
         if (value) > 0:
+        	print value
         	tiltServo += servoSpeed
       		if tiltServo > tiltMAX:
         		tiltServo = tiltMAX
       		pwm.setPWM(3, 0, tiltServo)
+      		
+      		
             #print "Camera down"	#Uncomment this line to see visual feedback
 PS3Cont.setupControlCallback(
         PS3Cont.PS3Controls.DPADDOWN,
@@ -172,9 +180,9 @@ PS3Cont.setupControlCallback(
 #Press SQUARE
 def SquareButtonCallBack(value):
 	if (value) == 1:
-		GPIO.setup(18, GPIO.OUT)
+		GPIO.setup(7, GPIO.OUT)
 	elif (value) == 0:
-		GPIO.setup(18, GPIO.IN)
+		GPIO.setup(7, GPIO.IN)
 PS3Cont.setupControlCallback(
 	PS3Cont.PS3Controls.SQUARE,
 	SquareButtonCallBack)
@@ -234,7 +242,6 @@ try:
 	#Ctrl C
 except KeyboardInterrupt:
 	print '\033[91m' + "\nEXIT via CTRL + C" + '\033[0m'	#Print in RED, then return to Defaults
-	GPIO.cleanup()
 	#error
 except:
 	print "Unexpected error:", sys.exc_info()[0]
