@@ -257,9 +257,9 @@ while running:
         panServo = panMIN
       pwm.setPWM(2, 0, panServo)
 
-    if functionCommandValues['K_SPACE'] == 1:
+    if functionCommandValues['K_SPACE'] == 1: #Laser on
       GPIO.setup(7, GPIO.OUT)
-    if functionCommandValues['K_SPACE'] == 0:
+    if functionCommandValues['K_SPACE'] == 0: #Laser off
       GPIO.setup(7, GPIO.IN)
 
 
