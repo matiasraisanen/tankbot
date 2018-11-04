@@ -12,7 +12,7 @@ import Robot
 import threading
 import RPi.GPIO as GPIO
 import time
-import sonicBot
+import sonarBot
 
 GPIO.setmode(GPIO.BOARD)
 
@@ -41,10 +41,12 @@ pwm.setPWM(2, 0, panServo)  #Start servos centered
 speed = 255	#Speed multiplier, values 0-255
 reducedSpeed = int(speed*0.50)  #Alternate track speed for turning. The lower the percentage, the lower the turning radius and forward momentum.
 robot = Robot.Robot(left_trim=0, right_trim=0)
+sonarBot = sonarBot
 
 #os.environ['SDL_VIDEODRIVER'] = 'dummy'
 pygame.init()
-screen = pygame.display.set_mode((100, 100)) 
+myfont = pygame.font.SysFont("monospace", 24)
+screen = pygame.display.set_mode((200, 200))
 
 running = True
 
@@ -63,95 +65,116 @@ cameraCommandValues = { 'K_UP':0,
                         'K_RIGHT':0,
                          }
 
-functionCommandValues = { 'K_SPACE':0, }
+functionCommandValues = { 'K_SPACE':0,
+                          'K_F2':0, }
 
 
 print ("********\n" + "*READY!*\n" + "********")
 print("Press ESCAPE to QUIT")
+readytext = myfont.render("READY!", 1, (0,255,0))
+screen.blit(readytext, (60, 160))
+pygame.draw.circle(screen, (0,255,0), (100,100), 50)
+pygame.display.flip()
+
+def checkKeyDown():
+    #Change values for Tank Movement
+    if event.key == pygame.K_w:
+      #print("forward!")
+      moveCommandValues['W'] = 1
+    if event.key == pygame.K_s:
+      #print("reverse")
+      moveCommandValues['S'] = 1
+    if event.key == pygame.K_a:
+      #print("turn left")
+      moveCommandValues['A'] = 1
+    if event.key == pygame.K_d:
+      #print("turn right")
+      moveCommandValues['D'] = 1
+      robot.stop()
+
+    #Change values for Camera Movement
+    if event.key == pygame.K_UP:
+      #print("Camera up")
+      cameraCommandValues['K_UP'] = 1
+    if event.key == pygame.K_DOWN:
+      #print("Camera down")
+      cameraCommandValues['K_DOWN'] = 1
+    if event.key == pygame.K_LEFT:
+      #print("Camera left")
+      cameraCommandValues['K_LEFT'] = 1
+    if event.key == pygame.K_RIGHT:
+      #print("Camera right")
+      cameraCommandValues['K_RIGHT'] = 1
+    if event.key == pygame.K_SPACE:
+      functionCommandValues['K_SPACE'] = 1
+    if event.key == pygame.K_F2:
+      functionCommandValues['K_F2'] = 1
+
+
+    if event.key == pygame.K_RCTRL:	#Press right CTRL to center PanTilt-kit
+      panServo = 365
+      tiltServo = 420
+      pwm.setPWM(2, 0, panServo)
+      pwm.setPWM(3, 0, tiltServo)
+
+    #Press ESCAPE to QUIT
+    if event.key == pygame.K_ESCAPE:
+      print(moveCommandValues)
+      print(cameraCommandValues)
+      running = False
+      quit()
+      pygame.quit()
+
+    else:
+        pass
+
+def checkKeyUp():
+    #Change values for Tank Movement
+    if event.key == pygame.K_w:
+      #print("stopFORWARD")
+      moveCommandValues['W'] = 0
+    if event.key == pygame.K_s:
+      #print("stopREVERSE")
+      moveCommandValues['S'] = 0
+    if event.key == pygame.K_a:
+      #print("stopLEFT")
+      moveCommandValues['A'] = 0
+    if event.key == pygame.K_d:
+      #print("stopRIGHT")
+      moveCommandValues['D'] = 0
+
+    #Change values for Camera Movement
+    if event.key == pygame.K_UP:
+      #print("Camera up STOP")
+      cameraCommandValues['K_UP'] = 0
+    if event.key == pygame.K_DOWN:
+      #print("Camera down STOP")
+      cameraCommandValues['K_DOWN'] = 0
+    if event.key == pygame.K_LEFT:
+      #print("Camera left STOP")
+      cameraCommandValues['K_LEFT'] = 0
+    if event.key == pygame.K_RIGHT:
+      #print("Camera right STOP")
+      cameraCommandValues['K_RIGHT'] = 0
+
+    if event.key == pygame.K_SPACE:
+      functionCommandValues['K_SPACE'] = 0
+    if event.key == pygame.K_F2:
+      functionCommandValues['K_F2'] = 0
+
+    else:
+      pass
+
 
 while running:
     for event in pygame.event.get():
       #When a key is pressed down
       if event.type == pygame.KEYDOWN:
-
-        #Change values for Tank Movement
-        if event.key == pygame.K_w:
-          #print("forward!")
-          moveCommandValues['W'] = 1
-        if event.key == pygame.K_s:
-          #print("reverse")
-          moveCommandValues['S'] = 1
-        if event.key == pygame.K_a:
-          #print("turn left")
-          moveCommandValues['A']= 1
-        if event.key == pygame.K_d:
-          #print("turn right")
-          moveCommandValues['D'] = 1
-        if event.key == pygame.K_SPACE:
-          #print("stop")
-          robot.stop()
-        
-        #Change values for Camera Movement
-        if event.key == pygame.K_UP:
-          #print("Camera up")
-          cameraCommandValues['K_UP'] = 1
-        if event.key == pygame.K_DOWN:
-          #print("Camera down")
-          cameraCommandValues['K_DOWN'] = 1
-        if event.key == pygame.K_LEFT:
-          #print("Camera left")
-          cameraCommandValues['K_LEFT'] = 1
-        if event.key == pygame.K_RIGHT:
-          #print("Camera right")
-          cameraCommandValues['K_RIGHT'] = 1
-        if event.key == pygame.K_SPACE:          
-          functionCommandValues['K_SPACE'] = 1
-
-        if event.key == pygame.K_RCTRL:	#Press right CTRL to center PanTilt-kit
-          panServo = 365
-          tiltServo = 420
-          pwm.setPWM(2, 0, panServo)
-          pwm.setPWM(3, 0, tiltServo)
-  
-        #Press ESCAPE to QUIT
-        if event.key == pygame.K_ESCAPE:
-          print(moveCommandValues)
-          print(cameraCommandValues)
-          running = False
+          checkKeyDown()
 
       #When a key is released
       if event.type == pygame.KEYUP:
-        
-        #Change values for Tank Movement
-        if event.key == pygame.K_w:
-          #print("stopFORWARD")
-          moveCommandValues['W'] = 0
-        if event.key == pygame.K_s:
-          #print("stopREVERSE")
-          moveCommandValues['S'] = 0
-        if event.key == pygame.K_a:
-          #print("stopLEFT")
-          moveCommandValues['A'] = 0
-        if event.key == pygame.K_d:
-          #print("stopRIGHT")
-          moveCommandValues['D'] = 0
-
-        #Change values for Camera Movement
-        if event.key == pygame.K_UP:
-          #print("Camera up STOP")
-          cameraCommandValues['K_UP'] = 0
-        if event.key == pygame.K_DOWN:
-          #print("Camera down STOP")
-          cameraCommandValues['K_DOWN'] = 0
-        if event.key == pygame.K_LEFT:
-          #print("Camera left STOP")
-          cameraCommandValues['K_LEFT'] = 0
-        if event.key == pygame.K_RIGHT:
-          #print("Camera right STOP")
-          cameraCommandValues['K_RIGHT'] = 0
-
-        if event.key == pygame.K_SPACE:
-          functionCommandValues['K_SPACE'] = 0
+          checkKeyUp()
 
     #Translate values into movement commands
 
@@ -261,6 +284,9 @@ while running:
       GPIO.setup(7, GPIO.OUT)
     if functionCommandValues['K_SPACE'] == 0: #Laser off
       GPIO.setup(7, GPIO.IN)
+
+      if functionCommandValues['K_F2'] == 1:
+        sonarBot.moveBot()
 
 
 pygame.quit()
