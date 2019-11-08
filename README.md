@@ -1,4 +1,10 @@
 # TankBot
+
+**PLEASE NOTE: If you are looking for the exact code used in my [bachelor's thesis](https://www.theseus.fi/handle/10024/155917), see release [v1.0.0](https://github.com/matiasraisanen/tankbot/releases/tag/v1.0.0).  
+Code in the master branch is subject to changes over time, and may not reflect the thesis build.**
+
+---
+
 Remote controlled tank-robot. Supports keyboard, PS3 controller and XBOX 360 controller. Can be used via SSH/putty or VNC-connection.
 
 How it works: Establish a remote connection to Pi, and move the robot using your keyboard (or a game controller). WASD moves the tank and arrow keys turn the camera. Use [UV4L](https://www.linux-projects.org/uv4l/) to watch a video stream from the robot at http://[raspi-IP]:9090/stream
@@ -18,11 +24,8 @@ User-controlled tankbot. Use PS3 controller to move.
 
 Other programs are mainly tests, or programs for the HATs provided by Adafruit.
 
-
-
-
-
 ## Hardware
+
 **Computer:** [Raspberry Pi 3 Model B](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
 
 **Operating system:** Raspbian 9.3 (Stretch)
@@ -40,6 +43,7 @@ Other programs are mainly tests, or programs for the HATs provided by Adafruit.
 **DC motor controller:** Adafruit DC & Stepper Motor HAT [(product ID 2348)](https://www.adafruit.com/product/2348)
 
 ## Media
+
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=k5S5gY3hc3g" target="_blank"><img src="http://img.youtube.com/vi/k5S5gY3hc3g/0.jpg" alt="KBControl" width="240" height="180" border="10" /></a><br> [Early version, keyboard control](https://youtu.be/k5S5gY3hc3g)
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=GreMILf87uk" target="_blank"><img src="http://img.youtube.com/vi/GreMILf87uk/0.jpg" alt="PanTil KBControl" width="240" height="180" border="10" /></a><br>[Pan/tilt-kit, keyboard control](https://www.youtube.com/watch?v=GreMILf87uk)
